@@ -1,0 +1,42 @@
+AllCops:
+  NewCops: enable
+
+Layout/LineLength:
+  Max: 120
+
+Style/BlockDelimiters:
+  EnforcedStyle: semantic
+
+# DragonRuby basic
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+
+Style/RandomWithOffset:
+  Enabled: false
+
+Style/RedundantFileExtensionInRequire:
+  Exclude:
+    - mygame/**/*
+
+Naming/MethodParameterName:
+  AllowedNames:
+    - x
+    - y
+    - w
+    - h
+    - r
+    - g
+    - b
+
+Style/GlobalVars:
+  AllowedVariables:
+    - $gtk
+
+Metrics/MethodLength:
+  Exclude:
+    - mygame/tests/**/*
+
+Style/Documentation:
+  Exclude:
+    - mygame/tests/**/*
