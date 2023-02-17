@@ -12,4 +12,5 @@ require "smaug/dragon_skeleton/lib/dragon_skeleton/pathfinding/a_star.rb"
 require "smaug/dragon_skeleton/lib/dragon_skeleton/pathfinding/priority_queue.rb"
 require "smaug/dragon_skeleton/lib/dragon_skeleton/screen.rb"
 require "smaug/dragon_skeleton/lib/dragon_skeleton/tilemap.rb"
+require "smaug/dragon_skeleton/lib/dragon_skeleton/tilemap/cell.rb"
 

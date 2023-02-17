@@ -10,33 +10,48 @@ module DragonSkeleton
   #
   #   args.state.tilemap.render(args.outputs)
   class Tilemap
-    attr_accessor :x, :y
-    attr_reader :grid_w, :grid_h, :cell_w, :cell_h
+    # The x coordinate of the bottom left corner of the tilemap
+    attr_accessor :x
+    # The y coordinate of the bottom left corner of the tilemap
+    attr_accessor :y
+    # The width of each cell in the tilemap
+    attr_reader :grid_w
+    # The height of each cell in the tilemap
+    attr_reader :grid_h
+    # The width of the tilemap in cells
+    attr_reader :cell_w
+    # The height of the tilemap in cells
+    attr_reader :cell_h
 
-    def initialize(x:, y:, cell_w:, cell_h:, grid_w:, grid_h:)
+    # Creates a new tilemap.
+    #
+    # You can optionally pass a tileset to use for the tilemap.
+    #
+    # A tileset is an object that responds to the following methods:
+    #
+    # [+default_tile+] Returns a Hash with default values for each cell
+    #
+    # [+[]+] Receives a tile key as argument and returns a Hash with values for the
+    #        given tile
+    def initialize(x:, y:, cell_w:, cell_h:, grid_w:, grid_h:, tileset: nil)
       @x = x
       @y = y
       @cell_w = cell_w
       @cell_h = cell_h
       @grid_h = grid_h
       @grid_w = grid_w
-      @tiles = grid_h.times.flat_map { |grid_y|
+      @tileset = tileset
+      @cells = grid_h.times.flat_map { |grid_y|
         grid_w.times.map { |grid_x|
-          [
-            grid_x * cell_w,
-            grid_y * cell_h,
-            nil, # path
-            nil, nil, nil, nil, # r, g, b, a
-            nil, nil, nil, nil  # tile_x, tile_y, tile_w, tile_h
-          ].tap { |tile| tile.extend(Tile) }
+          Cell.new(grid_x * cell_w, grid_y * cell_h, tileset: tileset)
         }
       }
-      @primitive = RenderedPrimitive.new(@tiles, self)
+      @primitive = RenderedPrimitive.new(@cells, self)
     end
 
-    # Returns the tile at the given grid coordinates.
+    # Returns the Cell at the given grid coordinates.
     def [](x, y)
-      @tiles[y * @grid_w + x]
+      @cells[y * @grid_w + x]
     end
 
     # Renders the tilemap to the given outputs / render target.
@@ -44,20 +59,9 @@ module DragonSkeleton
       outputs.primitives << @primitive
     end
 
-    module Tile # :nodoc: For extending an array with accessors for tile properties.
-      def self.array_accessors(*names)
-        names.each_with_index do |name, index|
-          define_method(name) { self[index] }
-          define_method("#{name}=") { |value| self[index] = value }
-        end
-      end
-
-      array_accessors :x, :y, :path, :r, :g, :b, :a, :tile_x, :tile_y, :tile_w, :tile_h
-    end
-
     class RenderedPrimitive # :nodoc: Internal class responsible for rendering the tilemap.
-      def initialize(tiles, tilemap)
-        @tiles = tiles
+      def initialize(cells, tilemap)
+        @cells = cells
         @tilemap = tilemap
       end
 
@@ -70,11 +74,12 @@ module DragonSkeleton
         origin_y = @tilemap.y
         w = @tilemap.cell_w
         h = @tilemap.cell_h
-        tile_count = @tiles.size
+        cell_count = @cells.size
+        cells = @cells
         index = 0
 
-        while index < tile_count
-          x, y, path, r, g, b, a, tile_x, tile_y, tile_w, tile_h = @tiles[index]
+        while index < cell_count
+          x, y, path, r, g, b, a, tile_x, tile_y, tile_w, tile_h = cells[index]
           ffi_draw.draw_sprite_4 origin_x + x, origin_y + y, w, h,
                                  path,
                                  nil, # angle

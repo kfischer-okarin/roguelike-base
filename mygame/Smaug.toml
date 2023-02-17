@@ -16,7 +16,7 @@ edition = "pro"
 
 [dependencies.dragon_skeleton]
 repo = "https://github.com/kfischer-okarin/dragon_skeleton.git"
-tag = "2023.02.17.1"
+tag = "2023.02.17.2"
 
 [itch]
 # The Project URL you set when you created the game on Itch.io. https://my-username.itch.io/my-game.
