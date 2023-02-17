@@ -1,5 +1,6 @@
 require 'smaug.rb'
 require 'lib/string_utf8_chars.rb'
+require 'lib/cp437_spritesheet_tileset.rb'
 
 def tick(args)
   setup(args) if args.tick_count.zero?
