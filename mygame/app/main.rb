@@ -1,4 +1,5 @@
 require 'smaug.rb'
+require 'lib/component.rb'
 require 'lib/string_utf8_chars.rb'
 require 'lib/cp437_spritesheet_tileset.rb'
 
