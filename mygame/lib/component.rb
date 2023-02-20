@@ -27,11 +27,11 @@ module Component
     default_values[name] = default if default
 
     define_method(name) do
-      @entity_data[component_name][name]
+      @entity_component_data[component_name][name]
     end
 
     define_method("#{name}=") do |value|
-      @entity_data[component_name][name] = value
+      @entity_component_data[component_name][name] = value
     end
   end
 
