@@ -3,7 +3,7 @@ class EntityStore
     entity = Object.new
 
     data = {}
-    entity.instance_variable_set(:@data, data)
+    entity.instance_variable_set(:@entity_data, data)
     components.each do |component|
       component_module = Component[component]
       entity.extend component_module
