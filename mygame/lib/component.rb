@@ -3,6 +3,7 @@ module Component
     def define(name, &block)
       @definitions ||= {}
       @definitions[name] = Module.new do
+        @name = name
         extend Component
       end
       @definitions[name].class_eval(&block)
@@ -19,5 +20,22 @@ module Component
     def clear_definitions
       @definitions = {}
     end
+  end
+
+  def attribute(name, default: nil)
+    component_name = @name
+    default_values[name] = default if default
+
+    define_method(name) do
+      @data[component_name][name]
+    end
+
+    define_method("#{name}=") do |value|
+      @data[component_name][name] = value
+    end
+  end
+
+  def default_values
+    @default_values ||= {}
   end
 end
