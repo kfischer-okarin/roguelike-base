@@ -7,8 +7,6 @@
 4. Copy the DragonRuby engine into your game repository (don't forget the hidden `.dragonruby` folder)
 
 ## TODO
-- Entity Store
-  - Can use old data
 - Entity Parent/Container/Location
 - Map Data Structure - tiles 2d array
   - Map as Entity Parent/Container/Location - probably even an entity itself?

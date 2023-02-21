@@ -1,6 +1,8 @@
 class EntityStore
-  def initialize
-    @data = { next_id: 0, entities: {} }
+  attr_reader :data
+
+  def initialize(data = nil)
+    @data = data || { next_id: 0, entities: {} }
     @entity_objects = {}
   end
 
