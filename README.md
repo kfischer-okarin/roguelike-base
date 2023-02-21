@@ -8,7 +8,6 @@
 
 ## TODO
 - Entity Store
-  - Data storage
   - Can use old data
 - Entity Parent/Container/Location
 - Map Data Structure - tiles 2d array
