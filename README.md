@@ -28,3 +28,7 @@
   - World reacts to actions
 
 - Wall Merging
+- Separate Map Generation into phases
+  - Visualize minimap after each phase
+  - UI with parameter settings
+  -
