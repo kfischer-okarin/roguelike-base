@@ -1,8 +1,13 @@
 class EntityStore
-  def create_entity(components:, **attributes)
-    entity = Object.new
+  def initialize
+    @data = { next_id: 0 }
+  end
 
-    data = { components: {} }
+  def create_entity(components:, **attributes)
+    entity = Entity.new
+
+    data = { components: {}, id: @data[:next_id] }
+    @data[:next_id] += 1
     component_data = data[:components]
     entity.instance_variable_set(:@entity_data, data)
     entity.instance_variable_set(:@entity_component_data, component_data)
@@ -16,5 +21,11 @@ class EntityStore
     end
 
     entity
+  end
+
+  class Entity
+    def id
+      @entity_data[:id]
+    end
   end
 end
