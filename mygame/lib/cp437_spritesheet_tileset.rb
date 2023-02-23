@@ -29,8 +29,10 @@ class CP437SpritesheetTileset
     { path: @path, tile_w: @tile_w, tile_h: @tile_h }
   end
 
-  def [](char)
-    @tiles[char]
+  def [](tile)
+    return @tiles[tile[:char]].merge(tile) if tile.is_a? Hash
+
+    @tiles[tile]
   end
 
   private
