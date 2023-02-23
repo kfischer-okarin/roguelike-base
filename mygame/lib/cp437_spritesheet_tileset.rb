@@ -35,6 +35,10 @@ class CP437SpritesheetTileset
     @tiles[tile]
   end
 
+  def define_tile(name, tile)
+    @tiles[name] = @tiles[tile[:char]].merge(tile)
+  end
+
   private
 
   def build_tiles
