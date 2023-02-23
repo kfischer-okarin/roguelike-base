@@ -7,7 +7,7 @@ class EntityStore
   end
 
   def [](entity_id)
-    @entity_objects[entity_id] ||= Entity.new(@data[:entities][entity_id])
+    @entity_objects[entity_id] ||= Entity.new(self, @data[:entities][entity_id])
   end
 
   def create_entity(components:, **attributes)
@@ -31,7 +31,8 @@ class EntityStore
   end
 
   class Entity
-    def initialize(data)
+    def initialize(entity_store, data)
+      @entity_store = entity_store
       @entity_data = data
       @entity_component_data = data[:components]
       @entity_component_data.each_key do |component|
