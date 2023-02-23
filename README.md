@@ -7,9 +7,6 @@
 4. Copy the DragonRuby engine into your game repository (don't forget the hidden `.dragonruby` folder)
 
 ## TODO
-- Entity Parent/Container/Location
-- Map Data Structure - tiles 2d array
-  - Map as Entity Parent/Container/Location - probably even an entity itself?
 - Render Map
   - Read Map portion and render completely
   - Only render when updated - store in render target

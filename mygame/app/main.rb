@@ -3,6 +3,7 @@ require 'lib/component.rb'
 require 'lib/entity_store.rb'
 require 'lib/string_utf8_chars.rb'
 require 'lib/cp437_spritesheet_tileset.rb'
+require 'app/components.rb'
 
 def tick(args)
   setup(args) if args.tick_count.zero?
@@ -13,4 +14,10 @@ end
 
 def setup(args)
   DragonSkeleton.add_to_top_level_namespace unless Object.const_defined? :Animations
+  $entity_store = EntityStore.new
+  args.state.entities = $entity_store.data
+  map = $entity_store.create_entity components: %i[map], cells: Array.new(40) { Array.new(23) }
+  $entity_store.create_entity components: %i[map_location], map: map, x: 20, y: 12
 end
+
+$gtk.reset

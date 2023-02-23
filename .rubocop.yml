@@ -32,6 +32,7 @@ Naming/MethodParameterName:
 Style/GlobalVars:
   AllowedVariables:
     - $gtk
+    - $entity_store
 
 Metrics/MethodLength:
   Exclude:
