@@ -41,6 +41,18 @@ module Component
     end
   end
 
+  def entity_attribute(name)
+    component_name = @name
+
+    define_method(name) do
+      @entity_store[@entity_component_data[component_name][name]]
+    end
+
+    define_method("#{name}=") do |value|
+      @entity_component_data[component_name][name] = value.id
+    end
+  end
+
   def default_values
     @default_values ||= {}
   end
