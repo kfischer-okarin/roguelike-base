@@ -50,5 +50,13 @@ class EntityStore
     def id
       @entity_data[:id]
     end
+
+    def to_s
+      "Entity #{id} (#{@entity_component_data.keys.map(&:to_s).join(', ')})"
+    end
+
+    def inspect
+      "Entity(#{@entity_data.inspect})"
+    end
   end
 end
