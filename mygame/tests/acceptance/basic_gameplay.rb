@@ -49,7 +49,8 @@ class GameTest
     @tilemap = build_tilemap(map_w, map_h)
     @game = nil
     map = game.create_entity :map, cells: map_tiles
-    @player = game.create_entity :player, map: map, **entity_positions['@'].first
+    game.player_entity = game.create_entity :player
+    game.transport_player_to map, **entity_positions['@'].first
   end
 
   def act(*actions)
