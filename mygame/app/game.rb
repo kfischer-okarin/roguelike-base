@@ -22,5 +22,9 @@ class Game
   end
 
   def tick(input_actions)
+    if input_actions[:move]
+      @player_entity.x += input_actions[:move][:x]
+      @player_entity.y += input_actions[:move][:y]
+    end
   end
 end
