@@ -10,10 +10,11 @@ def test_component_define_get_clear(_args, assert)
   Component.clear_definitions
 
   assert.equal! Component[:actor], nil
+ensure
+  Component.clear_definitions
 end
 
 def test_component_attributes(_args, assert)
-  Component.clear_definitions
   Component.define(:actor) do
     attribute :name
     attribute :hp, default: 100
@@ -24,10 +25,11 @@ def test_component_attributes(_args, assert)
 
   assert.equal! entity.name, 'Player'
   assert.equal! entity.hp, 100
+ensure
+  Component.clear_definitions
 end
 
 def test_component_entity_attributes(_args, assert)
-  Component.clear_definitions
   Component.define(:country) do
     entity_attribute :leader
   end
@@ -40,4 +42,6 @@ def test_component_entity_attributes(_args, assert)
   leader = entity_store[leader.id]
   country = entity_store[country.id]
   assert.equal! country.leader, leader
+ensure
+  Component.clear_definitions
 end

@@ -14,7 +14,6 @@ def test_entity_store_retrieve_entity_by_id(_args, assert)
 end
 
 def test_entity_store_can_be_initialized_from_serialized_data(_args, assert)
-  Component.clear_definitions
   Component.define(:enemy) do
     attribute :difficulty
   end
@@ -24,4 +23,6 @@ def test_entity_store_can_be_initialized_from_serialized_data(_args, assert)
   entity_store = EntityStore.new entity_store.data
 
   assert.equal! entity_store[entity.id].difficulty, entity.difficulty
+ensure
+  Component.clear_definitions
 end
