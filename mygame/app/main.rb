@@ -1,6 +1,7 @@
 require 'smaug.rb'
 
 require 'lib/component.rb'
+require 'lib/component_definitions.rb'
 require 'lib/entity_store.rb'
 require 'lib/string_utf8_chars.rb'
 require 'lib/cp437_spritesheet_tileset.rb'
@@ -16,7 +17,7 @@ end
 
 def setup(args)
   DragonSkeleton.add_to_top_level_namespace unless Object.const_defined? :Animations
-  $entity_store = EntityStore.new
+  $entity_store = EntityStore.new component_definitions: default_component_definitions
   args.state.entities = $entity_store.data
   map = $entity_store.create_entity components: %i[map], cells: Array.new(40) { Array.new(23) }
   $entity_store.create_entity components: %i[map_location], map: map, x: 20, y: 12
