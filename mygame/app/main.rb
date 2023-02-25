@@ -6,6 +6,7 @@ require 'lib/entity_store.rb'
 require 'lib/string_utf8_chars.rb'
 require 'lib/cp437_spritesheet_tileset.rb'
 require 'app/components.rb'
+require 'app/entity_prototypes.rb'
 require 'app/game.rb'
 
 def tick(args)

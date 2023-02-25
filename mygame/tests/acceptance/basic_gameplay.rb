@@ -77,7 +77,10 @@ class GameTest
   end
 
   def game
-    @game ||= Game.new(tilemap: @tilemap)
+    @game ||= Game.new(
+      tilemap: @tilemap,
+      entity_prototypes: default_entity_prototypes
+    )
   end
 
   def convert_action(action)
