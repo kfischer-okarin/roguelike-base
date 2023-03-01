@@ -60,12 +60,17 @@ class GameTest
   end
 
   def assert_map_view(expected_map_view)
-    actual_map_view = (0...@tilemap.grid_h).map { |y|
-      row = (0...@tilemap.grid_w).map { |x|
+    map_tiles = (0...@tilemap.grid_h).map { |y|
+      (0...@tilemap.grid_w).map { |x|
         @tilemap[x, y].tile || '.'
-      }.join
-
-      "#{row}\n"
+      }
+    }
+    @game.rendered_sprites.each do |sprite|
+      sprite_x, sprite_y = @tilemap.to_grid_coordinates(sprite)
+      map_tiles[sprite_x][sprite_y] = sprite[:char]
+    end
+    actual_map_view = map_tiles.map { |row_chars|
+      "#{row_chars.join}\n"
     }.reverse.join
 
     @assert.equal! actual_map_view, expected_map_view
