@@ -1,3 +1,5 @@
+require 'tests/test_helpers.rb'
+
 def test_entity_factory_instantiate(_args, assert)
   components = ComponentDefinitions.new
   components.define(:map_location) do
@@ -14,7 +16,5 @@ def test_entity_factory_instantiate(_args, assert)
 
   entity = factory.instantiate :orc, with_components: %i[health], x: 200, hp: 100
 
-  assert.equal! entity.hp, 100
-  assert.equal! entity.x, 200
-  assert.equal! entity.y, 100
+  assert.has_attributes! entity, x: 200, y: 100, hp: 100
 end

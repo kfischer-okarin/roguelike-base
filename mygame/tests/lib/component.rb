@@ -1,3 +1,5 @@
+require 'tests/test_helpers.rb'
+
 def test_component_attributes(_args, assert)
   components = ComponentDefinitions.new
   components.define(:actor) do
@@ -8,8 +10,7 @@ def test_component_attributes(_args, assert)
   entity_store = EntityStore.new component_definitions: components
   entity = entity_store.create_entity name: 'Player', components: [:actor]
 
-  assert.equal! entity.name, 'Player'
-  assert.equal! entity.hp, 100
+  assert.has_attributes! entity, name: 'Player', hp: 100
 end
 
 def test_component_entity_attributes(_args, assert)

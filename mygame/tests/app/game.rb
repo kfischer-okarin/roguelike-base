@@ -1,4 +1,4 @@
-DragonSkeleton.add_to_top_level_namespace
+require 'tests/test_helpers.rb'
 
 def test_game_create_entity(_args, assert)
   game = Game.new(
@@ -10,8 +10,7 @@ def test_game_create_entity(_args, assert)
 
   entity = game.create_entity :orc, x: 200
 
-  assert.equal! entity.x, 200
-  assert.equal! entity.y, 100
+  assert.has_attributes! entity, x: 200, y: 100
 end
 
 def test_game_transport_player_to(_args, assert)
@@ -21,9 +20,7 @@ def test_game_transport_player_to(_args, assert)
 
   game.transport_player_to map, x: 20, y: 20
 
-  assert.equal! game.player_entity.x, 20
-  assert.equal! game.player_entity.y, 20
-  assert.equal! game.player_entity.map, map
+  assert.has_attributes! game.player_entity, x: 20, y: 20, map: map
 end
 
 def test_game_tick_movement(_args, assert)
@@ -44,8 +41,4 @@ def test_game_tick_movement(_args, assert)
     assert.equal! position, test_case[:expected_position],
                   "Expected #{test_case[:expected_position]} after input #{test_case[:input_action]} but got #{position}"
   end
-end
-
-def a_tilemap
-  Tilemap.new(x: 0, y: 0, cell_w: 32, cell_h: 32, grid_w: 80, grid_h: 45)
 end
