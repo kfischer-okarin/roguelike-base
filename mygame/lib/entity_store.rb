@@ -5,6 +5,7 @@ class EntityStore
     @component_definitions = component_definitions
     @data = data || { next_id: 0, entities: {} }
     @entity_objects = {}
+    @entities_objects_by_component = {}
   end
 
   def [](entity_id)
@@ -13,6 +14,8 @@ class EntityStore
       entity = Entity.new(self, data)
       data[:components].each_key do |component|
         entity.extend @component_definitions[component]
+        @entities_objects_by_component[component] ||= []
+        @entities_objects_by_component[component] << entity
       end
       @entity_objects[entity_id] = entity
     end
@@ -38,6 +41,10 @@ class EntityStore
     end
 
     entity
+  end
+
+  def entities_with_component(component)
+    @entities_objects_by_component[component] || []
   end
 
   class Entity
