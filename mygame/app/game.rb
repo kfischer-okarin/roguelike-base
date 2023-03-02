@@ -6,16 +6,12 @@ class Game
   def initialize(tilemap:, entity_prototypes:)
     @tilemap = tilemap
     @entity_store = EntityStore.new component_definitions: default_component_definitions
-    @entity_prototypes = entity_prototypes
+    @entity_factory = EntityFactory.new entity_store: @entity_store, prototypes: entity_prototypes
     @rendered_sprites = []
   end
 
-  def create_entity(type, **attributes)
-    prototype = @entity_prototypes[type].dup
-    prototype[:components] += attributes[:components] if attributes[:components]
-    prototype = prototype.merge(attributes.except(:components))
-
-    @entity_store.create_entity prototype
+  def create_entity(type, with_components: nil, **attributes)
+    @entity_factory.instantiate type, with_components: with_components, **attributes
   end
 
   def transport_player_to(map, x:, y:)
