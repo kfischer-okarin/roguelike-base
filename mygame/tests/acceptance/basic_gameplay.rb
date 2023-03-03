@@ -26,7 +26,8 @@ class GameTest
   def initialize(args, assert, &block)
     @args = args
     @assert = assert
-    @tileset = TestTileset.new
+    @tileset = CP437SpritesheetTileset.new(path: 'test.png', w: 16, h: 16)
+    @tileset.define_tile :player, { char: '@' }
     @tilemap = build_tilemap(80, 45)
     instance_eval(&block)
   end
@@ -67,8 +68,8 @@ class GameTest
       }
     }
     @game.rendered_sprites.each do |sprite|
-      sprite_x, sprite_y = @tilemap.to_grid_coordinates(sprite)
-      map_tiles[sprite_x][sprite_y] = sprite[:char]
+      grid_coordinates = @tilemap.to_grid_coordinates(sprite)
+      map_tiles[grid_coordinates[:y]][grid_coordinates[:x]] = sprite[:char]
     end
     actual_map_view = map_tiles.map { |row_chars|
       "#{row_chars.join}\n"
