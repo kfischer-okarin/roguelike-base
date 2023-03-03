@@ -3,7 +3,7 @@ class Game
 
   attr_reader :rendered_sprites
 
-  def initialize(tilemap:, entity_prototypes:)
+  def initialize(tilemap:, entity_prototypes:, tileset:)
     @tilemap = tilemap
     @entity_store = EntityStore.new component_definitions: default_component_definitions
     @entity_factory = EntityFactory.new entity_store: @entity_store, prototypes: entity_prototypes

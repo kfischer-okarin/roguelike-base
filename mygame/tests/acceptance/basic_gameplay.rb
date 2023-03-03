@@ -1,4 +1,4 @@
-DragonSkeleton.add_to_top_level_namespace
+require 'tests/test_helpers.rb'
 
 def test_basic_gameplay(args, assert)
   GameTest.new(args, assert) do
@@ -26,6 +26,7 @@ class GameTest
   def initialize(args, assert, &block)
     @args = args
     @assert = assert
+    @tileset = TestTileset.new
     @tilemap = build_tilemap(80, 45)
     instance_eval(&block)
   end
@@ -79,12 +80,13 @@ class GameTest
   private
 
   def build_tilemap(w, h)
-    Tilemap.new(x: 0, y: 0, cell_w: 32, cell_h: 32, grid_w: w, grid_h: h)
+    Tilemap.new(x: 0, y: 0, cell_w: 32, cell_h: 32, grid_w: w, grid_h: h, tileset: @tileset)
   end
 
   def game
     @game ||= Game.new(
       tilemap: @tilemap,
+      tileset: @tileset,
       entity_prototypes: default_entity_prototypes
     )
   end

@@ -14,13 +14,3 @@ def test_map_renderer_render(_args, assert)
   sprite = renderer.sprites[0]
   assert.equal! sprite, tilemap.cell_rect({ x: 0, y: 0 }).sprite!(tile: :player)
 end
-
-class TestTileset
-  def default_tile
-    {}
-  end
-
-  def [](tile)
-    { tile: tile }
-  end
-end

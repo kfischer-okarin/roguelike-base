@@ -14,3 +14,17 @@ end
 def a_tilemap
   Tilemap.new(x: 0, y: 0, cell_w: 32, cell_h: 32, grid_w: 80, grid_h: 45)
 end
+
+class TestTileset
+  def default_tile
+    {}
+  end
+
+  def [](tile)
+    { tile: tile }
+  end
+end
+
+def a_tileset
+  TestTileset.new
+end
