@@ -14,17 +14,43 @@ require 'app/game.rb'
 
 def tick(args)
   setup(args) if args.tick_count.zero?
-  args.outputs.labels  << [640, 500, 'Hello World!', 5, 1]
-  args.outputs.labels  << [640, 460, 'Go to docs/docs.html and read it!', 5, 1]
-  args.outputs.labels  << [640, 420, 'Join the Discord! https://discord.dragonruby.org', 5, 1]
+  $game.tick(process_inputs(args.inputs))
+  render(args)
 end
 
 def setup(args)
   DragonSkeleton.add_to_top_level_namespace unless Object.const_defined? :Animations
-  $entity_store = EntityStore.new component_definitions: default_component_definitions
-  args.state.entities = $entity_store.data
-  map = $entity_store.create_entity components: %i[map], cells: Array.new(40) { Array.new(23) }
-  $entity_store.create_entity components: %i[map_location], map: map, x: 20, y: 12
+  tileset = CP437SpritesheetTileset.new(path: 'sprites/Zilk-16x16.png', w: 256, h: 256)
+  tileset.define_tile :player, { char: '@' }
+  args.state.tilemap = Tilemap.new(x: 0, y: -8, cell_w: 32, cell_h: 32, grid_w: 40, grid_h: 23, tileset: tileset)
+  $game = Game.new(tilemap: args.state.tilemap, entity_prototypes: default_entity_prototypes, tileset: tileset)
+  $game.player_entity = $game.create_entity :player
+  map = $game.create_entity :map, cells: Array.new(40) { Array.new(23) }
+  $game.transport_player_to map, x: 20, y: 12
+end
+
+def process_inputs(gtk_inputs)
+  key_down = gtk_inputs.keyboard.key_down
+  input_actions = {}
+  if key_down.left
+    input_actions[:move] = { x: -1, y: 0 }
+  elsif key_down.right
+    input_actions[:move] = { x: 1, y: 0 }
+  elsif key_down.down
+    input_actions[:move] = { x: 0, y: -1 }
+  elsif key_down.up
+    input_actions[:move] = { x: 0, y: 1 }
+  end
+  input_actions
+end
+
+def render(args)
+  args.outputs.background_color = [0, 0, 0]
+  args.state.tilemap.render(args.outputs)
+  args.outputs.primitives << $game.rendered_sprites
+  return if $gtk.production
+
+  args.outputs.primitives << { x: 0, y: 720, text: $gtk.current_framerate.to_i.to_s, r: 255, g: 255, b: 255 }.label!
 end
 
 $gtk.reset
