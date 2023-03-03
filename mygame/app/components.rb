@@ -19,5 +19,9 @@ def default_component_definitions
     end
   end
 
+  components.define :visible_on_map do
+    attribute :tile
+  end
+
   components
 end
