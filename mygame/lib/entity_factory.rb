@@ -1,4 +1,6 @@
 class EntityFactory
+  attr_reader :entity_store
+
   def initialize(entity_store:, prototypes:)
     @entity_store = entity_store
     @prototypes = prototypes
