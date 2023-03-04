@@ -11,6 +11,7 @@ require 'lib/map_renderer.rb'
 require 'app/components.rb'
 require 'app/entity_prototypes.rb'
 require 'app/game.rb'
+require 'app/tileset.rb'
 
 def tick(args)
   setup(args) if args.tick_count.zero?
@@ -20,8 +21,7 @@ end
 
 def setup(args)
   DragonSkeleton.add_to_top_level_namespace unless Object.const_defined? :Animations
-  tileset = CP437SpritesheetTileset.new(path: 'sprites/Zilk-16x16.png', w: 256, h: 256)
-  tileset.define_tile :player, { char: '@' }
+  tileset = build_tileset
   args.state.tilemap = Tilemap.new(x: 0, y: -8, cell_w: 32, cell_h: 32, grid_w: 40, grid_h: 23, tileset: tileset)
   $game = Game.new(tilemap: args.state.tilemap, entity_prototypes: default_entity_prototypes, tileset: tileset)
   $game.player_entity = $game.create_entity :player

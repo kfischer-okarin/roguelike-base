@@ -26,8 +26,7 @@ class GameTest
   def initialize(args, assert, &block)
     @args = args
     @assert = assert
-    @tileset = CP437SpritesheetTileset.new(path: 'test.png', w: 16, h: 16)
-    @tileset.define_tile :player, { char: '@' }
+    @tileset = build_tileset
     @tilemap = build_tilemap(80, 45)
     instance_eval(&block)
   end
