@@ -5,6 +5,12 @@ def default_component_definitions
     entity_attribute :map
     attribute :x
     attribute :y
+
+    def place_on(map, x:, y:)
+      self.map = map
+      self.x = x
+      self.y = y
+    end
   end
 
   components.define :map do

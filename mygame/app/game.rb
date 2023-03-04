@@ -14,9 +14,7 @@ class Game
   end
 
   def transport_player_to(map, x:, y:)
-    @player_entity.x = x
-    @player_entity.y = y
-    @player_entity.map = map
+    @player_entity.place_on map, x: x, y: y
   end
 
   def rendered_sprites
