@@ -19,7 +19,6 @@ def test_entity_factory_instantiate(_args, assert)
   assert.has_attributes! entity, x: 200, y: 100, hp: 100
 end
 
-
 def test_entity_factory_does_not_change_prototypes(_args, assert)
   components = ComponentDefinitions.new
   components.define(:map_location) do
