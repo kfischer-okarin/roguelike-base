@@ -6,6 +6,7 @@ class Game
     @entity_store = EntityStore.new component_definitions: default_component_definitions
     @entity_factory = EntityFactory.new entity_store: @entity_store, prototypes: entity_prototypes
     @map_renderer = MapRenderer.new(tilemap: @tilemap, entity_store: @entity_store, tileset: tileset)
+    @world = World.new entity_store: @entity_store
     @rendered_sprites = []
   end
 
@@ -23,7 +24,7 @@ class Game
 
   def tick(input_actions)
     process_input input_actions
-    execute_turn if @player_entity.action
+    @world.tick if @player_entity.action
     @map_renderer.render @player_entity.map, offset_x: 0, offset_y: 0
   end
 
@@ -33,11 +34,5 @@ class Game
     return unless input_actions[:move]
 
     @player_entity.action = { type: :move, x: input_actions[:move][:x], y: input_actions[:move][:y] }
-  end
-
-  def execute_turn
-    @player_entity.x += @player_entity.action[:x]
-    @player_entity.y += @player_entity.action[:y]
-    @player_entity.action = nil
   end
 end
