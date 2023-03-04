@@ -23,5 +23,9 @@ def default_component_definitions
     attribute :tile
   end
 
+  components.define :actor do
+    attribute :action
+  end
+
   components
 end
