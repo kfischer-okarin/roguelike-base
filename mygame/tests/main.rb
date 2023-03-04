@@ -1,5 +1,6 @@
 require 'tests/acceptance/basic_gameplay.rb'
 require 'tests/app/game.rb'
+require 'tests/app/world.rb'
 require 'tests/lib/component.rb'
 require 'tests/lib/component_definitions.rb'
 require 'tests/lib/cp437_spritesheet_tileset.rb'

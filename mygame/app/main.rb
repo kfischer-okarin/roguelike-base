@@ -12,6 +12,7 @@ require 'app/components.rb'
 require 'app/entity_prototypes.rb'
 require 'app/game.rb'
 require 'app/tileset.rb'
+require 'app/world.rb'
 
 def tick(args)
   setup(args) if args.tick_count.zero?
