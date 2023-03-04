@@ -16,4 +16,16 @@ def test_world_entity_movement(_args, assert)
 
   assert.has_attributes! player1, x: 6, y: 5, action: nil
   assert.has_attributes! player2, x: 8, y: 7, action: nil
+  assert.equal! world.last_tick_events, [
+    { type: :entity_moved, world_tick: 0, subject_id: player1.id, from: { x: 5, y: 5 }, to: { x: 6, y: 5 } },
+    { type: :entity_moved, world_tick: 0, subject_id: player2.id, from: { x: 8, y: 8 }, to: { x: 8, y: 7 } }
+  ]
+
+  world.tick
+
+  assert.equal! world.last_tick_events, []
+  assert.equal! world.events, [
+    { type: :entity_moved, world_tick: 0, subject_id: player1.id, from: { x: 5, y: 5 }, to: { x: 6, y: 5 } },
+    { type: :entity_moved, world_tick: 0, subject_id: player2.id, from: { x: 8, y: 8 }, to: { x: 8, y: 7 } }
+  ]
 end
