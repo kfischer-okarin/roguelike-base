@@ -28,3 +28,8 @@ end
 def a_tileset
   TestTileset.new
 end
+
+def build_entity_factory
+  entity_store = EntityStore.new component_definitions: default_component_definitions
+  EntityFactory.new entity_store: entity_store, prototypes: default_entity_prototypes
+end
