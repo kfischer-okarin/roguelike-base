@@ -1,5 +1,3 @@
-DragonSkeleton.add_to_top_level_namespace
-
 module GTK
   class Assert
     def has_attributes!(object, attributes)

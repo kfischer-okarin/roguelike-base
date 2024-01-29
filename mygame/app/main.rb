@@ -1,4 +1,4 @@
-require 'smaug.rb'
+require 'lib/tilemap.rb'
 
 require 'lib/component.rb'
 require 'lib/component_definitions.rb'
@@ -21,7 +21,6 @@ def tick(args)
 end
 
 def setup(args)
-  DragonSkeleton.add_to_top_level_namespace unless Object.const_defined? :Animations
   tileset = build_tileset
   args.state.tilemap = Tilemap.new(x: 0, y: -8, cell_w: 32, cell_h: 32, grid_w: 40, grid_h: 23, tileset: tileset)
   $game = Game.new(tilemap: args.state.tilemap, entity_prototypes: default_entity_prototypes, tileset: tileset)
