@@ -1,4 +1,4 @@
-require 'tests/test_helpers.rb'
+require 'tests/test_helpers'
 
 def test_entity_factory_instantiate(_args, assert)
   components = ComponentDefinitions.new

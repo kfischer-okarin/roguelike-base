@@ -1,4 +1,4 @@
-require 'tests/test_helpers.rb'
+require 'tests/test_helpers'
 
 def test_basic_gameplay(args, assert)
   GameTest.new(args, assert) do

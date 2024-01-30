@@ -1,18 +1,18 @@
-require 'lib/tilemap.rb'
+require 'lib/tilemap'
 
-require 'lib/component.rb'
-require 'lib/component_definitions.rb'
-require 'lib/entity_factory.rb'
-require 'lib/entity_store.rb'
-require 'lib/string_utf8_chars.rb'
-require 'lib/cp437_spritesheet_tileset.rb'
-require 'lib/map_renderer.rb'
+require 'lib/component'
+require 'lib/component_definitions'
+require 'lib/entity_factory'
+require 'lib/entity_store'
+require 'lib/string_utf8_chars'
+require 'lib/cp437_spritesheet_tileset'
+require 'lib/map_renderer'
 
-require 'app/components.rb'
-require 'app/entity_prototypes.rb'
-require 'app/game.rb'
-require 'app/tileset.rb'
-require 'app/world.rb'
+require 'app/components'
+require 'app/entity_prototypes'
+require 'app/game'
+require 'app/tileset'
+require 'app/world'
 
 def tick(args)
   setup(args) if args.tick_count.zero?

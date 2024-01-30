@@ -1,6 +1,7 @@
 AllCops:
   NewCops: enable
 
+# Personal preferences
 Layout/LineLength:
   Max: 120
 
@@ -8,17 +9,16 @@ Style/BlockDelimiters:
   EnforcedStyle: semantic
 
 # DragonRuby basic
+
+# Meaningless in mruby
 Style/FrozenStringLiteralComment:
   Enabled: false
 
-
+# Not implemented in mruby
 Style/RandomWithOffset:
   Enabled: false
 
-Style/RedundantFileExtensionInRequire:
-  Exclude:
-    - mygame/**/*
-
+# Typical parameters/attributes for DragonRuby primitives
 Naming/MethodParameterName:
   AllowedNames:
     - x
@@ -32,6 +32,7 @@ Naming/MethodParameterName:
 Style/GlobalVars:
   AllowedVariables:
     - $gtk
+    - $game
     - $entity_store
 
 Metrics/MethodLength:

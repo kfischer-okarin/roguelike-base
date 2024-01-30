@@ -1,4 +1,4 @@
-require 'tests/test_helpers.rb'
+require 'tests/test_helpers'
 
 def test_map_renderer_render(_args, assert)
   entity_factory = build_entity_factory

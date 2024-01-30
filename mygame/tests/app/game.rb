@@ -1,4 +1,4 @@
-require 'tests/test_helpers.rb'
+require 'tests/test_helpers'
 
 def test_game_create_entity(_args, assert)
   game = Game.new(
