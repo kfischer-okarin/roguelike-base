@@ -1,0 +1,25 @@
+* TODOs
+:PROPERTIES:
+:LOGGING:  nil
+:END:
+
+
+** TODO Comments about Object role + what it uses other objects for
+
+** TODO Move UI/Render Responsibility outside of Game - reverse dependency
+
+** TODO What to do with the game data? Component + Prototype Definitions?
+- Maybe just keep them fixed inside the world? No need to inject that? Since World simulation depends on those
+  components anyways?
+
+
+** TODO Event Store
+*** TODO Separate Event Store from World
+- Storing the events long term, world can still keep track of last tick events
+
+*** TODO Event Store: Cache Events in File ?
+
+
+** TODO Things to carry over from 7DRL2023
+*** TODO Map Renderer + FOV basic implementation
+*** TODO ProcGen Phase Framework + Visualizer + Parameter setter + Seed Browser

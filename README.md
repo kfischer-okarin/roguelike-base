@@ -6,26 +6,13 @@
 3. Clone your game (this repository) via git
 4. Copy the DragonRuby engine into your game repository (don't forget the hidden `.dragonruby` folder)
 
-## TODO
-- Render Map
-  - Read Map portion and render completely
-  - Only render when updated - store in render target
-    - Keep visible map
-- Entities
-  - Components
-    - Container ?
-    - Location
-      - EntityStore#entities_at_location
-  - Map is an Container
-  - Object attributes - automatically wrapped in object
-    - Polymorphic attributes (class depending on :type key - define via hash)
-- Game System
-  - Entities emit actions
-    - Store in history?
-  - World reacts to actions
+## How to update the DragonRuby version
+1. Execute following command in your repository
+   ```sh
+   git clean -f -x -d
+   ```
+   This will recursively delete all unknown & ignored files in your repository (i.e. the engine).
 
-- Wall Merging
-- Separate Map Generation into phases
-  - Visualize minimap after each phase
-  - UI with parameter settings
-  -
+   Be aware that this might also delete all other ignored files in your repository (like maybe save games) - so if you want
+   to keep anything make sure that you backup those files first
+2. Copy the new version of the DragonRuby engine into your game repository (don't forget the hidden `.dragonruby` folder)
