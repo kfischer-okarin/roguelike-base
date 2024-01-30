@@ -1,6 +1,6 @@
 TILES = {
   player: { char: '@' }
-}
+}.freeze
 
 def build_tileset
   tileset = CP437SpritesheetTileset.new(path: 'sprites/Zilk-16x16.png', w: 256, h: 256)

@@ -1,3 +1,4 @@
+# rubocop:disable Naming/PredicateName
 module GTK
   class Assert
     def has_attributes!(object, attributes)
@@ -8,6 +9,7 @@ module GTK
     end
   end
 end
+# rubocop:enable Naming/PredicateName
 
 def a_tilemap
   Tilemap.new(x: 0, y: 0, cell_w: 32, cell_h: 32, grid_w: 80, grid_h: 45)

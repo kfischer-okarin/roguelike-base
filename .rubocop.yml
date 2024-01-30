@@ -1,21 +1,32 @@
 AllCops:
   NewCops: enable
+  Exclude:
+    - mygame/lib/tilemap.rb
 
-# Personal preferences
+# --- Personal preferences ---
 Layout/LineLength:
   Max: 120
 
 Style/BlockDelimiters:
   EnforcedStyle: semantic
 
-# DragonRuby basic
+# --- DragonRuby basic settings ---
+Lint/NestedMethodDefinition:
+  AllowedMethods:
+    - define
 
-# Meaningless in mruby
-Style/FrozenStringLiteralComment:
-  Enabled: false
+# See this as refactoring suggestion not problem
+Metrics/AbcSize:
+  Severity: info
 
-# Not implemented in mruby
-Style/RandomWithOffset:
+# See this as refactoring suggestion not problem
+Metrics/MethodLength:
+  Severity: info
+  Exclude:
+    - mygame/tests/**/*
+
+# Not yet supported - Enable after updated to mruby 3.2
+Naming/BlockForwarding:
   Enabled: false
 
 # Typical parameters/attributes for DragonRuby primitives
@@ -29,16 +40,23 @@ Naming/MethodParameterName:
     - g
     - b
 
+Style/Documentation:
+  Enabled: false
+
+# Meaningless in mruby
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
 Style/GlobalVars:
   AllowedVariables:
     - $gtk
     - $game
     - $entity_store
 
-Metrics/MethodLength:
-  Exclude:
-    - mygame/tests/**/*
+# Not yet supported - Enable after updated to mruby 3.1
+Style/HashSyntax:
+  Enabled: false
 
-Style/Documentation:
-  Exclude:
-    - mygame/tests/**/*
+# Not implemented in mruby
+Style/RandomWithOffset:
+  Enabled: false

@@ -40,6 +40,7 @@ def test_game_tick_movement(_args, assert)
 
     position = { x: game.player_entity.x, y: game.player_entity.y }
     assert.equal! position, test_case[:expected_position],
-                  "Expected #{test_case[:expected_position]} after input #{test_case[:input_action]} but got #{position}"
+                  "Expected #{test_case[:expected_position]} after input #{test_case[:input_action]} " \
+                  "but got #{position}"
   end
 end
