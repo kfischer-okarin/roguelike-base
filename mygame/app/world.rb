@@ -26,12 +26,16 @@ class World
     old_y = entity.y
     entity.x += action[:x]
     entity.y += action[:y]
-    @last_tick_events << {
+    event_happened(
       type: :entity_moved,
-      world_tick: @tick,
       subject_id: entity.id,
       from: { x: old_x, y: old_y },
       to: { x: entity.x, y: entity.y }
-    }
+    )
+  end
+
+  def event_happened(event)
+    @last_tick_events << event.merge!(world_tick: @tick)
+    event
   end
 end
