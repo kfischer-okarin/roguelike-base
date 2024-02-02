@@ -29,3 +29,44 @@ def test_world_entity_movement(_args, assert)
     { type: :entity_moved, world_tick: 0, subject_id: player2.id, from: { x: 8, y: 8 }, to: { x: 8, y: 7 } }
   ]
 end
+
+def test_world_create_entity(_args, assert)
+  components = ComponentDefinitions.new
+  components.define(:map_location) do
+    attribute :x
+    attribute :y
+  end
+  components.define(:health) do
+    attribute :hp
+  end
+  entity_store = EntityStore.new component_definitions: components
+  world = World.new entity_store: entity_store, entity_types: {
+    orc: { components: %i[map_location], x: 100, y: 100 }
+  }
+
+  entity = world.create_entity :orc, with_components: %i[health], x: 200, hp: 100
+
+  assert.has_attributes! entity, x: 200, y: 100, hp: 100
+end
+
+def test_world_create_entity_does_not_change_entity_types(_args, assert)
+  components = ComponentDefinitions.new
+  components.define(:map_location) do
+    attribute :x
+    attribute :y
+  end
+  components.define(:health) do
+    attribute :hp
+  end
+  entity_store = EntityStore.new component_definitions: components
+  entity_types = {
+    orc: { components: %i[map_location], x: 100, y: 100 }
+  }
+  world = World.new entity_store: entity_store, entity_types: entity_types
+
+  world.create_entity :orc, with_components: %i[health], x: 200, hp: 100
+
+  assert.equal! entity_types, {
+    orc: { components: %i[map_location], x: 100, y: 100 }
+  }
+end
