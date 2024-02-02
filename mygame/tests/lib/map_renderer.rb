@@ -1,11 +1,11 @@
 require 'tests/test_helpers'
 
 def test_map_renderer_render(_args, assert)
-  entity_factory = build_entity_factory
-  map = entity_factory.instantiate :map, cells: Array.new(20) { Array.new(20) }
-  entity_factory.instantiate :player, map: map, x: 5, y: 5
+  world = build_world
+  map = world.create_entity :map, cells: Array.new(20) { Array.new(20) }
+  world.create_entity :player, map: map, x: 5, y: 5
   tilemap = Tilemap.new(x: 0, y: 0, cell_w: 32, cell_h: 32, grid_w: 10, grid_h: 10)
-  renderer = MapRenderer.new(tilemap: tilemap, entity_store: entity_factory.entity_store, tileset: TestTileset.new)
+  renderer = MapRenderer.new(tilemap: tilemap, entity_store: world.entity_store, tileset: TestTileset.new)
 
   renderer.render(map, offset_x: 5, offset_y: 5)
 

@@ -2,7 +2,7 @@
 # Allow entity store to be replaced
 # Entity Store might possibly be a wrapper around the actual store which allows for changing maps / areas
 class World
-  attr_reader :events, :last_tick_events
+  attr_reader :events, :last_tick_events, :entity_store
 
   def initialize(entity_store:, entity_types: nil)
     @entity_store = entity_store
