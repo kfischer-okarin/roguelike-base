@@ -13,6 +13,10 @@ class Game
     @player_entity.place_on map, x: x, y: y
   end
 
+  def current_map
+    @player_entity.map
+  end
+
   def tick(input_actions) # -> perform_player_action
     process_input input_actions
     @world.tick if @player_entity.action

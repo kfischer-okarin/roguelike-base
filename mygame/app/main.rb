@@ -49,7 +49,7 @@ end
 def render(args)
   args.outputs.background_color = [0, 0, 0]
   args.state.tilemap.render(args.outputs)
-  $map_renderer.render $game.player_entity.map, offset_x: 0, offset_y: 0
+  $map_renderer.render $game.current_map, offset_x: 0, offset_y: 0
   args.outputs.primitives << $map_renderer.sprites
   return if $gtk.production
 
