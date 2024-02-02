@@ -1,3 +1,5 @@
+# Manages world and player
+# Takes player action, applies it to the player entity, and ticks the world
 class Game
   attr_accessor :player_entity
 
@@ -8,19 +10,16 @@ class Game
     @rendered_sprites = []
   end
 
-  def create_entity(type, with_components: nil, **attributes)
-    @world.create_entity type, with_components: with_components, **attributes
-  end
-
   def transport_player_to(map, x:, y:)
     @player_entity.place_on map, x: x, y: y
   end
 
+  # Move to outside UI
   def rendered_sprites
     @map_renderer.sprites
   end
 
-  def tick(input_actions)
+  def tick(input_actions) # -> perform_player_action
     process_input input_actions
     @world.tick if @player_entity.action
     @map_renderer.render @player_entity.map, offset_x: 0, offset_y: 0

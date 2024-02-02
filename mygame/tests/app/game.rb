@@ -1,21 +1,5 @@
 require 'tests/test_helpers'
 
-def test_game_create_entity(_args, assert)
-  game = Game.new(
-    tilemap: a_tilemap,
-    tileset: a_tileset,
-    world: build_world(
-      entity_types: {
-        orc: { components: %i[map_location], x: 100, y: 100 }
-      }
-    )
-  )
-
-  entity = game.create_entity :orc, x: 200
-
-  assert.has_attributes! entity, x: 200, y: 100
-end
-
 def test_game_transport_player_to(_args, assert)
   world = build_world
   game = Game.new(tilemap: a_tilemap, tileset: a_tileset, world: world)
