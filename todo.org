@@ -7,8 +7,9 @@
 ** TODO Comments about Object role + what it uses other objects for
 
 ** TODO Move UI/Render Responsibility outside of Game - reverse dependency
+- UI Object? GamePlay Scene object?
 
-** TODO What to do with the game data? Component + Prototype Definitions?
+** DONE What to do with the game data? Component + Prototype Definitions?
 - Maybe just keep them fixed inside the world? No need to inject that? Since World simulation depends on those
   components anyways?
 
