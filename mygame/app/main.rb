@@ -25,7 +25,7 @@ def setup(args)
   entity_store = EntityStore.new component_definitions: default_component_definitions
   world = World.new entity_store: entity_store, entity_types: default_entity_types
   $map_renderer = MapRenderer.new(tilemap: args.state.tilemap, entity_store: entity_store, tileset: tileset)
-  $game = Game.new(tilemap: args.state.tilemap, world: world, tileset: tileset)
+  $game = Game.new(world: world)
   $game.player_entity = world.create_entity :player
   map = world.create_entity :map, cells: Array.new(40) { Array.new(23) }
   $game.transport_player_to map, x: 20, y: 12

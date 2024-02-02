@@ -86,11 +86,7 @@ class GameTest
   end
 
   def game
-    @game ||= Game.new(
-      tilemap: @tilemap,
-      tileset: @tileset,
-      world: world
-    )
+    @game ||= Game.new(world: world)
   end
 
   def world

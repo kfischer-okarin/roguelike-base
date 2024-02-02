@@ -3,9 +3,7 @@
 class Game
   attr_accessor :player_entity
 
-  def initialize(tilemap:, world:, tileset:)
-    @tilemap = tilemap
-    @map_renderer = MapRenderer.new(tilemap: @tilemap, entity_store: world.entity_store, tileset: tileset)
+  def initialize(world:)
     @world = world
   end
 

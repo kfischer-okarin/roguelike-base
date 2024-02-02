@@ -2,7 +2,7 @@ require 'tests/test_helpers'
 
 def test_game_transport_player_to(_args, assert)
   world = build_world
-  game = Game.new(tilemap: a_tilemap, tileset: a_tileset, world: world)
+  game = Game.new(world: world)
   game.player_entity = world.create_entity :player
   map = world.create_entity :map, cells: Array.new(80) { Array.new(45) }
 
@@ -19,7 +19,7 @@ def test_game_tick_movement(_args, assert)
     { input_action: { move: { x: -1, y: 0 } }, expected_position: { x: 19, y: 20 } }
   ].each do |test_case|
     world = build_world
-    game = Game.new(tilemap: a_tilemap, tileset: a_tileset, world: world)
+    game = Game.new(world: world)
     game.player_entity = world.create_entity :player
     map = world.create_entity :map, cells: Array.new(80) { Array.new(45) }
     game.transport_player_to map, x: 20, y: 20
