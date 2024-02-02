@@ -87,7 +87,7 @@ class GameTest
     @game ||= Game.new(
       tilemap: @tilemap,
       tileset: @tileset,
-      entity_prototypes: default_entity_types
+      world: build_world
     )
   end
 

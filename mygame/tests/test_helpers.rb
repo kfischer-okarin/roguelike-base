@@ -29,7 +29,7 @@ def a_tileset
   TestTileset.new
 end
 
-def build_world
+def build_world(entity_types: nil)
   entity_store = EntityStore.new component_definitions: default_component_definitions
-  World.new entity_store: entity_store, entity_types: default_entity_types
+  World.new entity_store: entity_store, entity_types: entity_types || default_entity_types
 end

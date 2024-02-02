@@ -4,9 +4,11 @@ def test_game_create_entity(_args, assert)
   game = Game.new(
     tilemap: a_tilemap,
     tileset: a_tileset,
-    entity_prototypes: {
-      orc: { components: %i[map_location], x: 100, y: 100 }
-    }
+    world: build_world(
+      entity_types: {
+        orc: { components: %i[map_location], x: 100, y: 100 }
+      }
+    )
   )
 
   entity = game.create_entity :orc, x: 200
@@ -15,7 +17,7 @@ def test_game_create_entity(_args, assert)
 end
 
 def test_game_transport_player_to(_args, assert)
-  game = Game.new(tilemap: a_tilemap, tileset: a_tileset, entity_prototypes: default_entity_types)
+  game = Game.new(tilemap: a_tilemap, tileset: a_tileset, world: build_world)
   game.player_entity = game.create_entity :player
   map = game.create_entity :map, cells: Array.new(80) { Array.new(45) }
 
@@ -31,7 +33,7 @@ def test_game_tick_movement(_args, assert)
     { input_action: { move: { x: 1, y: 0 } }, expected_position: { x: 21, y: 20 } },
     { input_action: { move: { x: -1, y: 0 } }, expected_position: { x: 19, y: 20 } }
   ].each do |test_case|
-    game = Game.new(tilemap: a_tilemap, tileset: a_tileset, entity_prototypes: default_entity_types)
+    game = Game.new(tilemap: a_tilemap, tileset: a_tileset, world: build_world)
     game.player_entity = game.create_entity :player
     map = game.create_entity :map, cells: Array.new(80) { Array.new(45) }
     game.transport_player_to map, x: 20, y: 20

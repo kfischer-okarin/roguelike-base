@@ -1,11 +1,10 @@
 class Game
   attr_accessor :player_entity
 
-  def initialize(tilemap:, entity_prototypes:, tileset:)
+  def initialize(tilemap:, world:, tileset:)
     @tilemap = tilemap
-    @entity_store = EntityStore.new component_definitions: default_component_definitions
-    @map_renderer = MapRenderer.new(tilemap: @tilemap, entity_store: @entity_store, tileset: tileset)
-    @world = World.new entity_store: @entity_store, entity_types: entity_prototypes
+    @map_renderer = MapRenderer.new(tilemap: @tilemap, entity_store: world.entity_store, tileset: tileset)
+    @world = world
     @rendered_sprites = []
   end
 
