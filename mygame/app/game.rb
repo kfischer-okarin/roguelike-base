@@ -4,14 +4,13 @@ class Game
   def initialize(tilemap:, entity_prototypes:, tileset:)
     @tilemap = tilemap
     @entity_store = EntityStore.new component_definitions: default_component_definitions
-    @entity_factory = EntityFactory.new entity_store: @entity_store, prototypes: entity_prototypes
     @map_renderer = MapRenderer.new(tilemap: @tilemap, entity_store: @entity_store, tileset: tileset)
-    @world = World.new entity_store: @entity_store
+    @world = World.new entity_store: @entity_store, entity_types: entity_prototypes
     @rendered_sprites = []
   end
 
   def create_entity(type, with_components: nil, **attributes)
-    @entity_factory.instantiate type, with_components: with_components, **attributes
+    @world.create_entity type, with_components: with_components, **attributes
   end
 
   def transport_player_to(map, x:, y:)
