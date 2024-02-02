@@ -2,7 +2,6 @@ require 'lib/tilemap'
 
 require 'lib/component'
 require 'lib/component_definitions'
-require 'lib/entity_factory'
 require 'lib/entity_store'
 require 'lib/string_utf8_chars'
 require 'lib/cp437_spritesheet_tileset'
