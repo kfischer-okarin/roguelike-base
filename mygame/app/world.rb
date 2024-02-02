@@ -4,7 +4,7 @@
 class World
   attr_reader :events, :last_tick_events, :entity_store
 
-  def initialize(entity_store:, entity_types: nil)
+  def initialize(entity_store:, entity_types:)
     @entity_store = entity_store
     @entity_types = entity_types
     @tick = 0
