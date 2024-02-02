@@ -49,8 +49,8 @@ class GameTest
 
     @tilemap = build_tilemap(map_w, map_h)
     @game = nil
-    map = game.create_entity :map, cells: map_tiles
-    game.player_entity = game.create_entity :player
+    map = world.create_entity :map, cells: map_tiles
+    game.player_entity = world.create_entity :player
     game.transport_player_to map, **entity_positions['@'].first
   end
 
@@ -87,8 +87,12 @@ class GameTest
     @game ||= Game.new(
       tilemap: @tilemap,
       tileset: @tileset,
-      world: build_world
+      world: world
     )
+  end
+
+  def world
+    @world ||= build_world
   end
 
   def convert_action(action)
