@@ -24,6 +24,7 @@ def setup(args)
   args.state.tilemap = Tilemap.new(x: 0, y: -8, cell_w: 32, cell_h: 32, grid_w: 40, grid_h: 23, tileset: tileset)
   entity_store = EntityStore.new component_definitions: default_component_definitions
   world = World.new entity_store: entity_store, entity_types: default_entity_types
+  $map_renderer = MapRenderer.new(tilemap: args.state.tilemap, entity_store: entity_store, tileset: tileset)
   $game = Game.new(tilemap: args.state.tilemap, world: world, tileset: tileset)
   $game.player_entity = world.create_entity :player
   map = world.create_entity :map, cells: Array.new(40) { Array.new(23) }
@@ -48,7 +49,8 @@ end
 def render(args)
   args.outputs.background_color = [0, 0, 0]
   args.state.tilemap.render(args.outputs)
-  args.outputs.primitives << $game.rendered_sprites
+  $map_renderer.render $game.player_entity.map, offset_x: 0, offset_y: 0
+  args.outputs.primitives << $map_renderer.sprites
   return if $gtk.production
 
   args.outputs.primitives << { x: 0, y: 720, text: $gtk.current_framerate.to_i.to_s, r: 255, g: 255, b: 255 }.label!

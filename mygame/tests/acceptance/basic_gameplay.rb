@@ -66,7 +66,9 @@ class GameTest
         @tilemap[x, y].tile || '.'
       }
     }
-    @game.rendered_sprites.each do |sprite|
+    map_renderer = MapRenderer.new(tilemap: @tilemap, entity_store: world.entity_store, tileset: @tileset)
+    map_renderer.render game.player_entity.map, offset_x: 0, offset_y: 0
+    map_renderer.sprites.each do |sprite|
       grid_coordinates = @tilemap.to_grid_coordinates(sprite)
       map_tiles[grid_coordinates[:y]][grid_coordinates[:x]] = sprite[:char]
     end

@@ -7,22 +7,15 @@ class Game
     @tilemap = tilemap
     @map_renderer = MapRenderer.new(tilemap: @tilemap, entity_store: world.entity_store, tileset: tileset)
     @world = world
-    @rendered_sprites = []
   end
 
   def transport_player_to(map, x:, y:)
     @player_entity.place_on map, x: x, y: y
   end
 
-  # Move to outside UI
-  def rendered_sprites
-    @map_renderer.sprites
-  end
-
   def tick(input_actions) # -> perform_player_action
     process_input input_actions
     @world.tick if @player_entity.action
-    @map_renderer.render @player_entity.map, offset_x: 0, offset_y: 0
   end
 
   private
