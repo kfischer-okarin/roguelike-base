@@ -1,4 +1,4 @@
-def default_entity_prototypes
+def default_entity_types
   {
     player: {
       components: %i[map_location visible_on_map actor],

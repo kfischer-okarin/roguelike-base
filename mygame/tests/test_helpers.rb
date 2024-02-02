@@ -31,5 +31,5 @@ end
 
 def build_world
   entity_store = EntityStore.new component_definitions: default_component_definitions
-  World.new entity_store: entity_store, entity_types: default_entity_prototypes
+  World.new entity_store: entity_store, entity_types: default_entity_types
 end

@@ -8,7 +8,7 @@ require 'lib/cp437_spritesheet_tileset'
 require 'lib/map_renderer'
 
 require 'app/components'
-require 'app/entity_prototypes'
+require 'app/entity_types'
 require 'app/game'
 require 'app/tileset'
 require 'app/world'
@@ -22,7 +22,7 @@ end
 def setup(args)
   tileset = build_tileset
   args.state.tilemap = Tilemap.new(x: 0, y: -8, cell_w: 32, cell_h: 32, grid_w: 40, grid_h: 23, tileset: tileset)
-  $game = Game.new(tilemap: args.state.tilemap, entity_prototypes: default_entity_prototypes, tileset: tileset)
+  $game = Game.new(tilemap: args.state.tilemap, entity_prototypes: default_entity_types, tileset: tileset)
   $game.player_entity = $game.create_entity :player
   map = $game.create_entity :map, cells: Array.new(40) { Array.new(23) }
   $game.transport_player_to map, x: 20, y: 12
