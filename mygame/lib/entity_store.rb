@@ -11,9 +11,8 @@ class EntityStore
   def [](entity_id)
     unless @entity_objects.key? entity_id
       data = @data[:entities][entity_id]
-      entity = Entity.new(self, data)
+      entity = construct_entity(data)
       data[:components].each_key do |component|
-        entity.extend @component_definitions[component]
         @entities_objects_by_component[component] ||= []
         @entities_objects_by_component[component] << entity
       end
@@ -45,6 +44,16 @@ class EntityStore
 
   def entities_with_component(component)
     @entities_objects_by_component[component] || []
+  end
+
+  private
+
+  def construct_entity(data)
+    entity = Entity.new(self, data)
+    data[:components].each_key do |component|
+      entity.extend @component_definitions[component]
+    end
+    entity
   end
 
   class Entity
