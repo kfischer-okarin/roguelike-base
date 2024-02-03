@@ -9,11 +9,12 @@ class World
     @entity_types = entity_types
     @tick = 0
     @events = []
+    @entity_store.index_by(:actor)
   end
 
   def tick
     @last_tick_events = []
-    @entity_store.entities_with_component(:actor).each do |entity|
+    @entity_store.entities_with_components(:actor).each do |entity|
       next unless entity.action
 
       send(:"perform_#{entity.action[:type]}", entity, entity.action)
