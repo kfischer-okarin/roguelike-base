@@ -17,7 +17,7 @@ end
 
 def test_entity_store_index_by(_args, assert)
   entity_store = build_entity_store(with_components: %i[hero enemy elemental])
-  entity_store.index_by(:enemy, :elemental)
+  index = entity_store.index_by(:enemy, :elemental)
   entity_store.create_entity components: %i[hero]
   entity_store.create_entity components: %i[hero elemental]
   entity_store.create_entity components: %i[enemy]
@@ -25,6 +25,8 @@ def test_entity_store_index_by(_args, assert)
   elemental_enemy2 = entity_store.create_entity components: %i[enemy elemental]
 
   assert.equal! entity_store.entities_with_components(:enemy, :elemental), [elemental_enemy1, elemental_enemy2]
+  assert.equal! index.is_a?(Enumerable), true, "Expected index to be an Enumerable but got #{index.class}"
+  assert.equal! index.to_a, [elemental_enemy1, elemental_enemy2]
 end
 
 def test_entity_store_index_by_with_existing_components(_args, assert)
@@ -34,9 +36,10 @@ def test_entity_store_index_by_with_existing_components(_args, assert)
   entity_store.create_entity components: %i[enemy]
   elemental_enemy1 = entity_store.create_entity components: %i[enemy elemental]
   elemental_enemy2 = entity_store.create_entity components: %i[enemy elemental]
-  entity_store.index_by(:enemy, :elemental)
+  index = entity_store.index_by(:enemy, :elemental)
 
   assert.equal! entity_store.entities_with_components(:enemy, :elemental), [elemental_enemy1, elemental_enemy2]
+  assert.equal! index.to_a, [elemental_enemy1, elemental_enemy2]
 end
 
 def test_entity_store_can_be_initialized_from_serialized_data(_args, assert)

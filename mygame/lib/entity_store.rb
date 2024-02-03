@@ -6,6 +6,7 @@ class EntityStore
     @data = data || { next_id: 0, entities: {} }
     @entity_objects = {}
     @component_indexes = {}
+    @listeners = []
   end
 
   def [](entity_id)
@@ -46,6 +47,10 @@ class EntityStore
     @component_indexes[components] = @entity_objects.values.select { |entity|
       components.all? { |c| entity.components.include? c }
     }
+    index = EntityIndex.new(components)
+    @listeners << index
+    @entity_objects.values.each { |entity| index.entity_was_created(entity) }
+    index
   end
 
   def entities_with_components(*components)
@@ -69,6 +74,7 @@ class EntityStore
 
       index << entity
     end
+    @listeners.each { |l| l.entity_was_created(entity) }
   end
 
   class Entity
@@ -92,6 +98,27 @@ class EntityStore
 
     def inspect
       "Entity(#{@entity_data.inspect})"
+    end
+  end
+
+  class EntityIndex
+    include Enumerable
+
+    def initialize(required_components)
+      @required_components = required_components
+      @entities = []
+    end
+
+    def entity_was_created(entity)
+      @entities << entity if matching? entity
+    end
+
+    def matching?(entity)
+      @required_components.all? { |c| entity.components.include? c }
+    end
+
+    def each(&block)
+      @entities.each { |entity| block.call(entity) }
     end
   end
 end
