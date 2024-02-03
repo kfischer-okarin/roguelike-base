@@ -64,7 +64,7 @@ class EntityStore
 
     component_data = data[:components]
     components.each do |component|
-      component_data[component] = @component_definitions[component].default_values.dup
+      component_data[component] = @component_definitions[component].build_default_values
     end
 
     data

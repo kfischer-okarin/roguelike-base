@@ -6,6 +6,7 @@ class ComponentDefinitions
   def define(name, &block)
     @definitions[name] = Module.new do
       @name = name
+      @default_values = {}
       @attributes = {}
       @entity_attribute = {}
       extend Component
@@ -27,16 +28,16 @@ class ComponentDefinitions
 
   module Component
     def attribute(name, default: nil)
-      default_values[name] = default if default
-      @attributes[name] = { default: default }
+      @default_values[name] = default if default
+      @attributes[name] = true
     end
 
     def entity_attribute(name)
       @entity_attribute[name] = true
     end
 
-    def default_values
-      @default_values ||= {}
+    def build_default_values
+      @default_values.dup
     end
 
     def extend_object(obj)
