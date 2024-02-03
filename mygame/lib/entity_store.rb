@@ -42,7 +42,9 @@ class EntityStore
   def index_by(*components)
     index = EntityIndex.new(components)
     @listeners << index
-    @entity_objects.values.each { |entity| index.entity_was_created(entity) }
+    @entity_objects.each_value do |entity|
+      index.entity_was_created(entity)
+    end
     index
   end
 
