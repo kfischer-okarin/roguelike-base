@@ -4,27 +4,25 @@ class EntityStore
   def initialize(data = nil, component_definitions:)
     @component_definitions = component_definitions
     @data = data || { next_id: 0, entities: {} }
-    @entity_objects = {}
+    @entity_objects = initialize_entities
     @listeners = []
   end
 
   def [](entity_id)
-    unless @entity_objects.key? entity_id
-      data = @data[:entities][entity_id]
-      entity = construct_entity(data)
-      @listeners.each { |l| l.entity_was_created(entity) }
-      @entity_objects[entity_id] = entity
-    end
-
     @entity_objects[entity_id]
   end
 
   def create_entity(components:, **attributes)
     data = create_new_entity_data(components)
+    entity = construct_entity(data)
 
-    entity = self[data[:id]]
     attributes.each do |name, value|
       entity.send("#{name}=", value)
+    end
+
+    @entity_objects[entity.id] = entity
+    @listeners.each do |listener|
+      listener.entity_was_created(entity)
     end
 
     entity
@@ -41,6 +39,22 @@ class EntityStore
 
   private
 
+  def initialize_entities
+    result = {}
+    @data[:entities].each do |id, entity_data|
+      result[id] = construct_entity(entity_data)
+    end
+    result
+  end
+
+  def construct_entity(data)
+    entity = Entity.new(self, data)
+    data[:components].each_key do |component|
+      entity.extend @component_definitions[component]
+    end
+    entity
+  end
+
   def create_new_entity_data(components)
     id = @data[:next_id]
     @data[:next_id] += 1
@@ -54,14 +68,6 @@ class EntityStore
     end
 
     data
-  end
-
-  def construct_entity(data)
-    entity = Entity.new(self, data)
-    data[:components].each_key do |component|
-      entity.extend @component_definitions[component]
-    end
-    entity
   end
 
   class Entity

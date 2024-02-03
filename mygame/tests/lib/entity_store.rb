@@ -52,3 +52,13 @@ def test_entity_store_can_be_initialized_from_serialized_data(_args, assert)
 
   assert.equal! entity_store[entity.id].difficulty, entity.difficulty
 end
+
+def test_entity_store_from_serialized_data_indexes_existing_data_correctly(_args, assert)
+  component_definitions = build_component_definitions(:enemy)
+  entity_store = EntityStore.new component_definitions: component_definitions
+  entity = entity_store.create_entity components: [:enemy]
+  entity_store = EntityStore.new entity_store.data, component_definitions: component_definitions
+  index = entity_store.index_by(:enemy)
+
+  assert.equal! index.map(&:id), [entity.id]
+end
