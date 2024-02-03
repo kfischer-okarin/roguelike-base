@@ -102,9 +102,11 @@ class EntityStore
       @entities = []
     end
 
+    # --- EntityStore listener interface ---
     def entity_was_created(entity)
       @entities << entity if matching? entity
     end
+    # --------------------------------------
 
     def matching?(entity)
       @required_components.all? { |c| entity.entity_component_attached? c }
