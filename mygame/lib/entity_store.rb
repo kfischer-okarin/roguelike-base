@@ -14,7 +14,7 @@ class EntityStore
 
   def create_entity(components:, **attributes)
     data = create_new_entity_data(components)
-    entity = construct_entity(data)
+    entity = construct_entity_from_data(data)
 
     attributes.each do |name, value|
       entity.send("#{name}=", value)
@@ -42,15 +42,15 @@ class EntityStore
   def initialize_entities
     result = {}
     @data[:entities].each do |id, entity_data|
-      result[id] = construct_entity(entity_data)
+      result[id] = construct_entity_from_data(entity_data)
     end
     result
   end
 
-  def construct_entity(data)
-    entity = Entity.new(self, data)
-    data[:components].each_key do |component|
-      entity.extend @component_definitions[component]
+  def construct_entity_from_data(entity_data)
+    entity = Entity.new(self, entity_data)
+    entity_data[:components].each do |component, data|
+      @component_definitions[component].attach_to(entity, **data)
     end
     entity
   end
@@ -59,15 +59,8 @@ class EntityStore
     id = @data[:next_id]
     @data[:next_id] += 1
 
-    data = { id: id, components: {} }
-    @data[:entities][id] = data
-
-    component_data = data[:components]
-    components.each do |component|
-      component_data[component] = @component_definitions[component].build_default_values
-    end
-
-    data
+    component_data = components.to_h { |c| [c, {}] }
+    @data[:entities][id] = { id: id, components: component_data }
   end
 
   class Entity

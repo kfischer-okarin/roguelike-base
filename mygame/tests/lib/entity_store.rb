@@ -43,7 +43,7 @@ end
 def test_entity_store_can_be_initialized_from_serialized_data(_args, assert)
   components = ComponentDefinitions.new
   components.define(:enemy) do
-    attribute :difficulty
+    attribute :difficulty, default: 1
   end
   entity_store = EntityStore.new component_definitions: components
   entity = entity_store.create_entity components: [:enemy], difficulty: 3
