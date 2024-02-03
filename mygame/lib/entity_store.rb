@@ -20,18 +20,9 @@ class EntityStore
   end
 
   def create_entity(components:, **attributes)
-    id = @data[:next_id]
-    @data[:next_id] += 1
+    data = create_new_entity_data(components)
 
-    data = { id: id, components: {} }
-    @data[:entities][id] = data
-
-    component_data = data[:components]
-    components.each do |component|
-      component_data[component] = @component_definitions[component].default_values.dup
-    end
-
-    entity = self[id]
+    entity = self[data[:id]]
     attributes.each do |name, value|
       entity.send("#{name}=", value)
     end
@@ -49,6 +40,21 @@ class EntityStore
   end
 
   private
+
+  def create_new_entity_data(components)
+    id = @data[:next_id]
+    @data[:next_id] += 1
+
+    data = { id: id, components: {} }
+    @data[:entities][id] = data
+
+    component_data = data[:components]
+    components.each do |component|
+      component_data[component] = @component_definitions[component].default_values.dup
+    end
+
+    data
+  end
 
   def construct_entity(data)
     entity = Entity.new(self, data)
