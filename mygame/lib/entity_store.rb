@@ -12,7 +12,7 @@ class EntityStore
     unless @entity_objects.key? entity_id
       data = @data[:entities][entity_id]
       entity = construct_entity(data)
-      index_entity(entity)
+      @listeners.each { |l| l.entity_was_created(entity) }
       @entity_objects[entity_id] = entity
     end
 
@@ -56,10 +56,6 @@ class EntityStore
       entity.extend @component_definitions[component]
     end
     entity
-  end
-
-  def index_entity(entity)
-    @listeners.each { |l| l.entity_was_created(entity) }
   end
 
   class Entity
