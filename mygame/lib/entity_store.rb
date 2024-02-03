@@ -12,10 +12,7 @@ class EntityStore
     unless @entity_objects.key? entity_id
       data = @data[:entities][entity_id]
       entity = construct_entity(data)
-      data[:components].each_key do |component|
-        @entities_objects_by_component[component] ||= []
-        @entities_objects_by_component[component] << entity
-      end
+      index_entity(entity)
       @entity_objects[entity_id] = entity
     end
 
@@ -56,6 +53,13 @@ class EntityStore
     entity
   end
 
+  def index_entity(entity)
+    entity.components.each do |component|
+      @entities_objects_by_component[component] ||= []
+      @entities_objects_by_component[component] << entity
+    end
+  end
+
   class Entity
     def initialize(entity_store, data)
       @entity_store = entity_store
@@ -65,6 +69,10 @@ class EntityStore
 
     def id
       @entity_data[:id]
+    end
+
+    def components
+      @entity_component_data.keys
     end
 
     def to_s
