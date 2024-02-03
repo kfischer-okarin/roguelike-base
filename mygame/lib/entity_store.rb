@@ -5,7 +5,6 @@ class EntityStore
     @component_definitions = component_definitions
     @data = data || { next_id: 0, entities: {} }
     @entity_objects = {}
-    @entities_objects_by_component = {}
     @component_indexes = {}
   end
 
@@ -49,10 +48,6 @@ class EntityStore
     }
   end
 
-  def entities_with_component(component)
-    @entities_objects_by_component[component] || []
-  end
-
   def entities_with_components(*components)
     components.sort!
     @component_indexes[components] || []
@@ -69,11 +64,6 @@ class EntityStore
   end
 
   def index_entity(entity)
-    entity.components.each do |component|
-      @entities_objects_by_component[component] ||= []
-      @entities_objects_by_component[component] << entity
-    end
-
     @component_indexes.each do |components, index|
       next unless components.all? { |c| entity.components.include? c }
 
