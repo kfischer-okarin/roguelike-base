@@ -44,7 +44,7 @@ class ComponentDefinitions
       super(obj)
 
       component_data = obj.instance_variable_get(:@entity_component_data)[@name]
-      @attributes.each do |name, options|
+      @attributes.each_key do |name|
         obj.define_singleton_method(name) do
           component_data[name]
         end
