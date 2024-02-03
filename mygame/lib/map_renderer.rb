@@ -7,11 +7,11 @@ class MapRenderer
     @tileset = tileset
     @sprites = [1]
     @default_sprite = @tileset.default_tile
-    @entity_store.index_by :visible_on_map
+    @rendered_entities = @entity_store.index_by :visible_on_map
   end
 
   def render(_map, offset_x:, offset_y:)
-    @sprites = @entity_store.entities_with_components(:visible_on_map).map { |entity|
+    @sprites = @rendered_entities.map { |entity|
       sprite = @default_sprite.to_sprite(@tileset[entity.tile])
       sprite.merge! @tilemap.cell_rect({ x: entity.x - offset_x, y: entity.y - offset_y })
     }
