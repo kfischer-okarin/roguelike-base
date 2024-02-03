@@ -7,6 +7,7 @@ class ComponentDefinitions
     @definitions[name] = Module.new do
       @name = name
       @attributes = {}
+      @entity_attribute = {}
       extend Component
     end
     @definitions[name].class_eval(&block)
@@ -31,15 +32,7 @@ class ComponentDefinitions
     end
 
     def entity_attribute(name)
-      component_name = @name
-
-      define_method(name) do
-        @entity_store[@entity_component_data[component_name][name]]
-      end
-
-      define_method("#{name}=") do |value|
-        @entity_component_data[component_name][name] = value.id
-      end
+      @entity_attribute[name] = true
     end
 
     def default_values
@@ -57,6 +50,16 @@ class ComponentDefinitions
 
         obj.define_singleton_method("#{name}=") do |value|
           component_data[name] = value
+        end
+      end
+
+      @entity_attribute.each_key do |name|
+        obj.define_singleton_method(name) do
+          @entity_store[component_data[name]]
+        end
+
+        obj.define_singleton_method("#{name}=") do |value|
+          component_data[name] = value.id
         end
       end
     end
