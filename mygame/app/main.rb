@@ -1,6 +1,5 @@
 require 'lib/tilemap'
 
-require 'lib/component'
 require 'lib/component_definitions'
 require 'lib/entity_store'
 require 'lib/string_utf8_chars'
