@@ -81,8 +81,8 @@ class EntityStore
       @entity_data[:id]
     end
 
-    def components
-      @entity_component_data.keys
+    def entity_component_attached?(component)
+      @entity_component_data.key? component
     end
 
     def to_s
@@ -107,7 +107,7 @@ class EntityStore
     end
 
     def matching?(entity)
-      @required_components.all? { |c| entity.components.include? c }
+      @required_components.all? { |c| entity.entity_component_attached? c }
     end
 
     def each(&block)
