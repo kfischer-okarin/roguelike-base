@@ -42,7 +42,11 @@ class EntityStore
 
   def index_by(*components)
     components.sort!
-    @component_indexes[components] ||= []
+    return if @component_indexes.key? components
+
+    @component_indexes[components] = @entity_objects.values.select { |entity|
+      components.all? { |c| entity.components.include? c }
+    }
   end
 
   def entities_with_component(component)
