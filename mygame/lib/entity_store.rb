@@ -6,6 +6,7 @@ class EntityStore
     @data = data || { next_id: 0, entities: {} }
     @entity_objects = {}
     @entities_objects_by_component = {}
+    @component_indexes = {}
   end
 
   def [](entity_id)
@@ -39,8 +40,18 @@ class EntityStore
     entity
   end
 
+  def index_by(*components)
+    components.sort!
+    @component_indexes[components] ||= []
+  end
+
   def entities_with_component(component)
     @entities_objects_by_component[component] || []
+  end
+
+  def entities_with_components(*components)
+    components.sort!
+    @component_indexes[components] || []
   end
 
   private
@@ -57,6 +68,12 @@ class EntityStore
     entity.components.each do |component|
       @entities_objects_by_component[component] ||= []
       @entities_objects_by_component[component] << entity
+    end
+
+    @component_indexes.each do |components, index|
+      next unless components.all? { |c| entity.components.include? c }
+
+      index << entity
     end
   end
 

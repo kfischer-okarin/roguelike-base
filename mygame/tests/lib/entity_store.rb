@@ -15,6 +15,18 @@ def test_entity_store_retrieve_entity_by_id(_args, assert)
   assert.equal! entity_store[entity.id], entity
 end
 
+def test_entity_store_index_by(_args, assert)
+  entity_store = build_entity_store(with_components: %i[hero enemy elemental])
+  entity_store.index_by(:enemy, :elemental)
+  entity_store.create_entity components: %i[hero]
+  entity_store.create_entity components: %i[hero elemental]
+  entity_store.create_entity components: %i[enemy]
+  elemental_enemy1 = entity_store.create_entity components: %i[enemy elemental]
+  elemental_enemy2 = entity_store.create_entity components: %i[enemy elemental]
+
+  assert.equal! entity_store.entities_with_components(:enemy, :elemental), [elemental_enemy1, elemental_enemy2]
+end
+
 def test_entity_store_list_entities_by_component(_args, assert)
   entity_store = build_entity_store(with_components: %i[hero enemy])
   hero1 = entity_store.create_entity components: %i[hero]
