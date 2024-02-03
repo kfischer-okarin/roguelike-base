@@ -24,7 +24,6 @@ def test_entity_store_index_by(_args, assert)
   elemental_enemy1 = entity_store.create_entity components: %i[enemy elemental]
   elemental_enemy2 = entity_store.create_entity components: %i[enemy elemental]
 
-  assert.equal! entity_store.entities_with_components(:enemy, :elemental), [elemental_enemy1, elemental_enemy2]
   assert.equal! index.is_a?(Enumerable), true, "Expected index to be an Enumerable but got #{index.class}"
   assert.equal! index.to_a, [elemental_enemy1, elemental_enemy2]
 end
@@ -38,7 +37,6 @@ def test_entity_store_index_by_with_existing_components(_args, assert)
   elemental_enemy2 = entity_store.create_entity components: %i[enemy elemental]
   index = entity_store.index_by(:enemy, :elemental)
 
-  assert.equal! entity_store.entities_with_components(:enemy, :elemental), [elemental_enemy1, elemental_enemy2]
   assert.equal! index.to_a, [elemental_enemy1, elemental_enemy2]
 end
 

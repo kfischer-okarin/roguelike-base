@@ -5,7 +5,6 @@ class EntityStore
     @component_definitions = component_definitions
     @data = data || { next_id: 0, entities: {} }
     @entity_objects = {}
-    @component_indexes = {}
     @listeners = []
   end
 
@@ -41,21 +40,10 @@ class EntityStore
   end
 
   def index_by(*components)
-    components.sort!
-    return if @component_indexes.key? components
-
-    @component_indexes[components] = @entity_objects.values.select { |entity|
-      components.all? { |c| entity.components.include? c }
-    }
     index = EntityIndex.new(components)
     @listeners << index
     @entity_objects.values.each { |entity| index.entity_was_created(entity) }
     index
-  end
-
-  def entities_with_components(*components)
-    components.sort!
-    @component_indexes[components] || []
   end
 
   private
@@ -69,11 +57,6 @@ class EntityStore
   end
 
   def index_entity(entity)
-    @component_indexes.each do |components, index|
-      next unless components.all? { |c| entity.components.include? c }
-
-      index << entity
-    end
     @listeners.each { |l| l.entity_was_created(entity) }
   end
 
