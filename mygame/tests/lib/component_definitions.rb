@@ -16,14 +16,16 @@ end
 
 def test_component_definitions_attributes(_args, assert)
   components = ComponentDefinitions.new
-  components.define(:actor) do
+  actor_component = components.define(:actor) do
     attribute :name
     attribute :hp, default: 100
   end
 
-  entity_store = EntityStore.new component_definitions: components
-  entity = entity_store.create_entity name: 'Player', components: [:actor]
+  entity = build_empty_entity
 
+  actor_component.attach_to(entity, name: 'Player')
+
+  assert.true! entity.entity_component_attached?(:actor)
   assert.has_attributes! entity, name: 'Player', hp: 100
 end
 

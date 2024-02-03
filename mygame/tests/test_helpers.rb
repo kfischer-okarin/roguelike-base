@@ -50,3 +50,8 @@ def build_component_definitions(*components)
   end
   component_definitions
 end
+
+def build_empty_entity
+  entity_store = build_entity_store
+  entity_store.create_entity components: []
+end

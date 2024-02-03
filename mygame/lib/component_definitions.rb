@@ -4,14 +4,15 @@ class ComponentDefinitions
   end
 
   def define(name, &block)
-    @definitions[name] = Module.new do
+    component = Module.new do
       @name = name
       @default_values = {}
       @attributes = {}
       @entity_attribute = {}
       extend Component
     end
-    @definitions[name].class_eval(&block)
+    component.class_eval(&block)
+    @definitions[name] = component
   end
 
   def [](name)
@@ -38,6 +39,12 @@ class ComponentDefinitions
 
     def build_default_values
       @default_values.dup
+    end
+
+    def attach_to(entity, **attributes)
+      entity_component_data = entity.instance_variable_get(:@entity_component_data)
+      entity_component_data[@name] = build_default_values.merge(attributes)
+      entity.extend(self)
     end
 
     def extend_object(obj)
