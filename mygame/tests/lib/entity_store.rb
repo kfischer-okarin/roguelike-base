@@ -1,5 +1,7 @@
+require 'tests/test_helpers'
+
 def test_entity_store_assigns_unique_id(_args, assert)
-  entity_store = EntityStore.new component_definitions: ComponentDefinitions.new
+  entity_store = build_entity_store
   entity1 = entity_store.create_entity components: []
   entity2 = entity_store.create_entity components: []
 
@@ -7,21 +9,14 @@ def test_entity_store_assigns_unique_id(_args, assert)
 end
 
 def test_entity_store_retrieve_entity_by_id(_args, assert)
-  entity_store = EntityStore.new component_definitions: ComponentDefinitions.new
+  entity_store = build_entity_store
   entity = entity_store.create_entity components: []
 
   assert.equal! entity_store[entity.id], entity
 end
 
 def test_entity_store_list_entities_by_component(_args, assert)
-  components = ComponentDefinitions.new
-  components.define(:hero) do
-    # ...
-  end
-  components.define(:enemy) do
-    # ...
-  end
-  entity_store = EntityStore.new component_definitions: components
+  entity_store = build_entity_store(with_components: %i[hero enemy])
   hero1 = entity_store.create_entity components: %i[hero]
   hero2 = entity_store.create_entity components: %i[hero]
   entity_store.create_entity components: %i[enemy]

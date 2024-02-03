@@ -33,3 +33,20 @@ def build_world(entity_types: nil)
   entity_store = EntityStore.new component_definitions: default_component_definitions
   World.new entity_store: entity_store, entity_types: entity_types || default_entity_types
 end
+
+def build_entity_store(with_components: nil)
+  component_definitions = if with_components
+                            build_component_definitions(*with_components)
+                          else
+                            default_component_definitions
+                          end
+  EntityStore.new component_definitions: component_definitions
+end
+
+def build_component_definitions(*components)
+  component_definitions = ComponentDefinitions.new
+  components.each do |component|
+    component_definitions.define component do; end
+  end
+  component_definitions
+end
