@@ -45,6 +45,23 @@ def test_component_definitions_methods(_args, assert)
   assert.equal! entity.title, 'Mr. Player'
 end
 
+def test_component_definitions_attributes_default_values_are_duplicated_deeply(_args, assert)
+  components = ComponentDefinitions.new
+  components.define(:actor) do
+    attribute :name
+    attribute :inventory, default: []
+  end
+
+  entity_store = EntityStore.new component_definitions: components
+  entity = entity_store.create_entity name: 'Player', components: [:actor]
+
+  entity.inventory << 'Sword'
+
+  entity = entity_store.create_entity name: 'Player', components: [:actor]
+
+  assert.equal! entity.inventory, []
+end
+
 def test_component_definitions_entity_attributes(_args, assert)
   components = ComponentDefinitions.new
   components.define(:country) do

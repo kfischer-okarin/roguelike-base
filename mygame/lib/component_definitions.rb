@@ -44,7 +44,7 @@ class ComponentDefinitions
     end
 
     def build_default_values
-      @default_values.dup
+      DeepDup.dup(@default_values)
     end
 
     def attach_to(entity, **attributes)
