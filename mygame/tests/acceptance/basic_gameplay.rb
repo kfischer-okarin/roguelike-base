@@ -56,7 +56,7 @@ class GameTest
 
   def act(*actions)
     actions.each do |action|
-      @game.tick convert_action(action)
+      @game.perform_player_action convert_action(action)
     end
   end
 
@@ -96,7 +96,7 @@ class GameTest
   def convert_action(action)
     case action
     when :move_right
-      { move: { x: 1, y: 0 } }
+      { type: :move, x: 1, y: 0 }
     end
   end
 end
