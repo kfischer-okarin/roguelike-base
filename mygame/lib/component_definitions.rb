@@ -4,15 +4,8 @@ class ComponentDefinitions
   end
 
   def define(name, &block)
-    component = Module.new do
-      @name = name
-      @default_values = {}
-      @attributes = {}
-      @entity_attribute = {}
-      @methods = {}
-      extend Component
-    end
-    component.class_eval(&block)
+    component = Component.new(name)
+    component.instance_eval(&block)
     @definitions[name] = component
   end
 
@@ -28,7 +21,15 @@ class ComponentDefinitions
     @definitions = {}
   end
 
-  module Component
+  class Component
+    def initialize(name)
+      @name = name
+      @default_values = {}
+      @attributes = {}
+      @entity_attribute = {}
+      @methods = {}
+    end
+
     def attribute(name, default: nil)
       @default_values[name] = default if default
       @attributes[name] = true
@@ -73,6 +74,10 @@ class ComponentDefinitions
       @methods.each do |name, block|
         entity.define_singleton_method(name, &block)
       end
+    end
+
+    def to_s
+      "Component(#{@name})"
     end
   end
 end

@@ -6,7 +6,7 @@ def test_component_definitions(_args, assert)
     # ...
   end
 
-  assert.equal! components[:actor].class, Module
+  assert.equal! components[:actor].class, ComponentDefinitions::Component
   assert.equal! components.defined_types, [:actor]
 
   components.clear
