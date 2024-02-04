@@ -48,36 +48,30 @@ class ComponentDefinitions
 
     def attach_to(entity, **attributes)
       entity_component_data = entity.instance_variable_get(:@entity_component_data)
-      entity_component_data[@name] = build_default_values.merge(attributes)
-      entity.extend(self)
-    end
+      component_data = entity_component_data[@name] = build_default_values.merge(attributes)
 
-    def extend_object(obj)
-      super(obj)
-
-      component_data = obj.instance_variable_get(:@entity_component_data)[@name]
       @attributes.each_key do |name|
-        obj.define_singleton_method(name) do
+        entity.define_singleton_method(name) do
           component_data[name]
         end
 
-        obj.define_singleton_method("#{name}=") do |value|
+        entity.define_singleton_method("#{name}=") do |value|
           component_data[name] = value
         end
       end
 
       @entity_attribute.each_key do |name|
-        obj.define_singleton_method(name) do
+        entity.define_singleton_method(name) do
           @entity_store[component_data[name]]
         end
 
-        obj.define_singleton_method("#{name}=") do |value|
+        entity.define_singleton_method("#{name}=") do |value|
           component_data[name] = value.id
         end
       end
 
       @methods.each do |name, block|
-        obj.define_singleton_method(name, &block)
+        entity.define_singleton_method(name, &block)
       end
     end
   end
