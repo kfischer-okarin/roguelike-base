@@ -1,5 +1,6 @@
 require 'lib/tilemap'
 
+require 'lib/deep_dup'
 require 'lib/component_definitions'
 require 'lib/entity_store'
 require 'lib/string_utf8_chars'
