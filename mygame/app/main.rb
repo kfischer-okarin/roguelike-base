@@ -15,7 +15,8 @@ require 'app/world'
 
 def tick(args)
   setup(args) if args.tick_count.zero?
-  $game.tick(process_inputs(args.inputs))
+  player_action = player_action(process_inputs(args.inputs))
+  $game.perform_player_action(player_action) if player_action
   render(args)
 end
 
@@ -44,6 +45,12 @@ def process_inputs(gtk_inputs)
     input_actions[:move] = { x: 0, y: 1 }
   end
   input_actions
+end
+
+def player_action(input_actions)
+  return unless input_actions[:move]
+
+  { type: :move, x: input_actions[:move][:x], y: input_actions[:move][:y] }
 end
 
 def render(args)
