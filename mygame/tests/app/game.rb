@@ -11,12 +11,12 @@ def test_game_transport_player_to(_args, assert)
   assert.has_attributes! game.player_entity, x: 20, y: 20, map: map
 end
 
-def test_game_tick_movement(_args, assert)
+def test_game_perform_player_action_movement(_args, assert)
   [
-    { input_action: { move: { x: 0, y: 1 } }, expected_position: { x: 20, y: 21 } },
-    { input_action: { move: { x: 0, y: -1 } }, expected_position: { x: 20, y: 19 } },
-    { input_action: { move: { x: 1, y: 0 } }, expected_position: { x: 21, y: 20 } },
-    { input_action: { move: { x: -1, y: 0 } }, expected_position: { x: 19, y: 20 } }
+    { action: { type: :move, x: 0, y: 1 }, expected_position: { x: 20, y: 21 } },
+    { action: { type: :move, x: 1, y: 0 }, expected_position: { x: 21, y: 20 } },
+    { action: { type: :move, x: 0, y: -1 }, expected_position: { x: 20, y: 19 } },
+    { action: { type: :move, x: -1, y: 0 }, expected_position: { x: 19, y: 20 } }
   ].each do |test_case|
     world = build_world
     game = Game.new(world: world)
@@ -24,7 +24,7 @@ def test_game_tick_movement(_args, assert)
     map = world.create_entity :map, cells: Array.new(80) { Array.new(45) }
     game.transport_player_to map, x: 20, y: 20
 
-    game.tick test_case[:input_action]
+    game.perform_player_action test_case[:action]
 
     position = { x: game.player_entity.x, y: game.player_entity.y }
     assert.equal! position, test_case[:expected_position],

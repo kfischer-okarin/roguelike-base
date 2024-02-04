@@ -20,6 +20,11 @@ class Game
     @world.tick if @player_entity.action
   end
 
+  def perform_player_action(action)
+    @player_entity.action = action
+    @world.tick
+  end
+
   private
 
   def process_input(input_actions)
