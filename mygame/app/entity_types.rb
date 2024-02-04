@@ -5,7 +5,7 @@ def default_entity_types
       tile: :player
     },
     map: {
-      components: %i[map]
+      components: %i[grid]
     }
   }
 end

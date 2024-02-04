@@ -13,7 +13,7 @@ def default_component_definitions
     end
   end
 
-  components.define :map do
+  components.define :grid do
     attribute :cells
 
     method :w do
