@@ -69,3 +69,21 @@ def test_world_create_entity_does_not_change_entity_types(_args, assert)
     orc: { components: %i[map_location], x: 100, y: 100 }
   }
 end
+
+def test_world_create_entity_deeply_dups_entity_types(_args, assert)
+  components = ComponentDefinitions.new
+  components.define(:inventory) do
+    attribute :items, default: []
+  end
+  entity_store = EntityStore.new component_definitions: components
+  entity_types = {
+    hero: { components: %i[inventory], items: ['Sword'] }
+  }
+  world = World.new entity_store: entity_store, entity_types: entity_types
+  hero = world.create_entity :hero
+  hero.items << 'Shield'
+
+  hero2 = world.create_entity :hero
+
+  assert.equal! hero2.items, ['Sword']
+end

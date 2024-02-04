@@ -25,7 +25,7 @@ class World
   end
 
   def create_entity(type, with_components: nil, **attributes)
-    entity_type = @entity_types[type].dup
+    entity_type = DeepDup.dup(@entity_types[type])
     entity_type[:components] += with_components if with_components
     entity_type = entity_type.merge(attributes)
 
