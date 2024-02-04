@@ -6,7 +6,7 @@ def default_component_definitions
     attribute :x
     attribute :y
 
-    def place_on(map, x:, y:)
+    method :place_on do |map, x:, y:|
       self.map = map
       self.x = x
       self.y = y
@@ -16,11 +16,11 @@ def default_component_definitions
   components.define :map do
     attribute :cells
 
-    def w
+    method :w do
       cells.size
     end
 
-    def h
+    method :h do
       cells[0].size
     end
   end
