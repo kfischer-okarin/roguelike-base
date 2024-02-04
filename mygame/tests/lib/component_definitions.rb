@@ -29,6 +29,22 @@ def test_component_definitions_attributes(_args, assert)
   assert.has_attributes! entity, name: 'Player', hp: 100
 end
 
+def test_component_definitions_methods(_args, assert)
+  components = ComponentDefinitions.new
+  actor_component = components.define(:actor) do
+    attribute :name
+    method :title do
+      "Mr. #{name}"
+    end
+  end
+
+  entity = build_empty_entity
+
+  actor_component.attach_to(entity, name: 'Player')
+
+  assert.equal! entity.title, 'Mr. Player'
+end
+
 def test_component_definitions_entity_attributes(_args, assert)
   components = ComponentDefinitions.new
   components.define(:country) do

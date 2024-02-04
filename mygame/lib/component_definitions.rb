@@ -9,6 +9,7 @@ class ComponentDefinitions
       @default_values = {}
       @attributes = {}
       @entity_attribute = {}
+      @methods = {}
       extend Component
     end
     component.class_eval(&block)
@@ -35,6 +36,10 @@ class ComponentDefinitions
 
     def entity_attribute(name)
       @entity_attribute[name] = true
+    end
+
+    def method(name, &block)
+      @methods[name] = block
     end
 
     def build_default_values
@@ -69,6 +74,10 @@ class ComponentDefinitions
         obj.define_singleton_method("#{name}=") do |value|
           component_data[name] = value.id
         end
+      end
+
+      @methods.each do |name, block|
+        obj.define_singleton_method(name, &block)
       end
     end
   end
