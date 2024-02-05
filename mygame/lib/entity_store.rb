@@ -8,6 +8,10 @@ class EntityStore
     @listeners = []
   end
 
+  def size
+    @entity_objects.size
+  end
+
   def [](entity_id)
     @entity_objects[entity_id]
   end

@@ -1,5 +1,13 @@
 require 'tests/test_helpers'
 
+def test_entity_store_size(_args, assert)
+  entity_store = build_entity_store
+  entity_store.create_entity components: []
+  entity_store.create_entity components: []
+
+  assert.equal! entity_store.size, 2
+end
+
 def test_entity_store_assigns_unique_id(_args, assert)
   entity_store = build_entity_store
   entity1 = entity_store.create_entity components: []
