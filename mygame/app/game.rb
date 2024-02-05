@@ -3,9 +3,8 @@
 class Game
   attr_accessor :player_entity
 
-  def initialize(world: nil, entity_store: nil)
-    @world = world if world
-    @world = World.new entity_store: entity_store, entity_types: default_entity_types if entity_store
+  def initialize(entity_store:)
+    @world = World.new entity_store: entity_store, entity_types: default_entity_types
   end
 
   def create_entity(type, with_components: nil, **attributes)
