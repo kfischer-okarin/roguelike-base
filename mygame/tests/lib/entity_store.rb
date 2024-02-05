@@ -48,6 +48,14 @@ def test_entity_store_index_by_with_existing_components(_args, assert)
   assert.equal! index.to_a, [elemental_enemy1, elemental_enemy2]
 end
 
+def test_entity_store_index_by_returns_same_index_every_time(_args, assert)
+  entity_store = build_entity_store(with_components: %i[hero enemy elemental])
+  index = entity_store.index_by(:enemy, :elemental)
+
+  assert.equal! index, entity_store.index_by(:enemy, :elemental)
+  assert.equal! index, entity_store.index_by(:elemental, :enemy)
+end
+
 def test_entity_store_can_be_initialized_from_serialized_data(_args, assert)
   components = ComponentDefinitions.new
   components.define(:enemy) do

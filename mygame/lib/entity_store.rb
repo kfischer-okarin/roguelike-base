@@ -6,6 +6,7 @@ class EntityStore
     @data = data || { next_id: 0, entities: {} }
     @entity_objects = initialize_entities
     @listeners = []
+    @indexes = {}
   end
 
   def size
@@ -33,12 +34,18 @@ class EntityStore
   end
 
   def index_by(*components)
-    index = EntityIndex.new(components)
-    @listeners << index
-    @entity_objects.each_value do |entity|
-      index.entity_was_created(entity)
+    components.sort!
+
+    unless @indexes.key? components
+      index = EntityIndex.new(components)
+      @listeners << index
+      @entity_objects.each_value do |entity|
+        index.entity_was_created(entity)
+      end
+      @indexes[components] = index
     end
-    index
+
+    @indexes[components]
   end
 
   private
