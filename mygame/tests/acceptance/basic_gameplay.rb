@@ -26,6 +26,8 @@ class GameTest
   def initialize(args, assert, &block)
     @args = args
     @assert = assert
+    @entity_store = build_entity_store
+    @game = Game.new(entity_store: @entity_store)
     @tileset = build_tileset
     @tilemap = build_tilemap(80, 45)
     instance_eval(&block)
@@ -48,10 +50,9 @@ class GameTest
     end
 
     @tilemap = build_tilemap(map_w, map_h)
-    @game = nil
-    map = game.create_entity :map, cells: map_tiles
-    game.player_entity = game.create_entity :player
-    game.transport_player_to map, **entity_positions['@'].first
+    map = @game.create_entity :map, cells: map_tiles
+    @game.player_entity = @game.create_entity :player
+    @game.transport_player_to map, **entity_positions['@'].first
   end
 
   def act(*actions)
@@ -66,8 +67,8 @@ class GameTest
         @tilemap[x, y].tile || '.'
       }
     }
-    map_renderer = MapRenderer.new(tilemap: @tilemap, entity_store: entity_store, tileset: @tileset)
-    map_renderer.render game.current_map, offset_x: 0, offset_y: 0
+    map_renderer = MapRenderer.new(tilemap: @tilemap, entity_store: @entity_store, tileset: @tileset)
+    map_renderer.render @game.current_map, offset_x: 0, offset_y: 0
     map_renderer.sprites.each do |sprite|
       grid_coordinates = @tilemap.to_grid_coordinates(sprite)
       map_tiles[grid_coordinates[:y]][grid_coordinates[:x]] = sprite[:char]
@@ -83,14 +84,6 @@ class GameTest
 
   def build_tilemap(w, h)
     Tilemap.new(x: 0, y: 0, cell_w: 32, cell_h: 32, grid_w: w, grid_h: h, tileset: @tileset)
-  end
-
-  def game
-    @game ||= Game.new(entity_store: entity_store)
-  end
-
-  def entity_store
-    @entity_store ||= build_entity_store
   end
 
   def convert_action(action)
