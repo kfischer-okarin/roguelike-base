@@ -29,7 +29,7 @@ class GameTest
     @entity_store = build_entity_store
     @game = Game.new(entity_store: @entity_store)
     @tileset = build_tileset
-    @tilemap = build_tilemap(80, 45)
+    @gameplay_scene = Scenes::Gameplay.new(game: @game)
     instance_eval(&block)
   end
 
@@ -49,7 +49,7 @@ class GameTest
       end
     end
 
-    @tilemap = build_tilemap(map_w, map_h)
+    @gameplay_scene.tilemap_size = { w: map_w, h: map_h }
     map = @game.create_entity :map, cells: map_tiles
     @game.player_entity = @game.create_entity :player
     @game.transport_player_to map, **entity_positions['@'].first
@@ -62,15 +62,15 @@ class GameTest
   end
 
   def assert_map_view(expected_map_view)
-    map_tiles = (0...@tilemap.grid_h).map { |y|
-      (0...@tilemap.grid_w).map { |x|
-        @tilemap[x, y].tile || '.'
+    map_tiles = (0...tilemap.grid_h).map { |y|
+      (0...tilemap.grid_w).map { |x|
+        tilemap[x, y].tile || '.'
       }
     }
-    map_renderer = MapRenderer.new(tilemap: @tilemap, entity_store: @entity_store, tileset: @tileset)
+    map_renderer = MapRenderer.new(tilemap: tilemap, entity_store: @entity_store, tileset: @tileset)
     map_renderer.render @game.current_map, offset_x: 0, offset_y: 0
     map_renderer.sprites.each do |sprite|
-      grid_coordinates = @tilemap.to_grid_coordinates(sprite)
+      grid_coordinates = tilemap.to_grid_coordinates(sprite)
       map_tiles[grid_coordinates[:y]][grid_coordinates[:x]] = sprite[:char]
     end
     actual_map_view = map_tiles.map { |row_chars|
@@ -82,8 +82,8 @@ class GameTest
 
   private
 
-  def build_tilemap(w, h)
-    Tilemap.new(x: 0, y: 0, cell_w: 32, cell_h: 32, grid_w: w, grid_h: h, tileset: @tileset)
+  def tilemap
+    @gameplay_scene.tilemap
   end
 
   def convert_action(action)

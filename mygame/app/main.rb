@@ -10,6 +10,7 @@ require 'lib/map_renderer'
 require 'app/components'
 require 'app/entity_types'
 require 'app/game'
+require 'app/scenes/gameplay'
 require 'app/tileset'
 require 'app/world'
 
