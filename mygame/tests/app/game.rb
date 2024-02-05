@@ -1,21 +1,20 @@
 require 'tests/test_helpers'
 
 def test_game_create_entity(_args, assert)
-  world = build_world
-  game = Game.new(world: world)
-  entity_count_before = world.entity_store.size
+  entity_store = build_entity_store
+  game = Game.new(entity_store: entity_store)
+  entity_count_before = entity_store.size
 
   entity = game.create_entity(:player)
 
-  assert.equal! world.entity_store.size, entity_count_before + 1
-  assert.equal! entity, world.entity_store[entity.id]
+  assert.equal! entity_store.size, entity_count_before + 1
+  assert.equal! entity, entity_store[entity.id]
 end
 
 def test_game_transport_player_to(_args, assert)
-  world = build_world
-  game = Game.new(world: world)
-  game.player_entity = world.create_entity :player
-  map = world.create_entity :map, cells: Array.new(80) { Array.new(45) }
+  game = Game.new(entity_store: build_entity_store)
+  game.player_entity = game.create_entity :player
+  map = game.create_entity :map, cells: Array.new(80) { Array.new(45) }
 
   game.transport_player_to map, x: 20, y: 20
 
@@ -29,10 +28,9 @@ def test_game_perform_player_action_movement(_args, assert)
     { action: { type: :move, x: 0, y: -1 }, expected_position: { x: 20, y: 19 } },
     { action: { type: :move, x: -1, y: 0 }, expected_position: { x: 19, y: 20 } }
   ].each do |test_case|
-    world = build_world
-    game = Game.new(world: world)
-    game.player_entity = world.create_entity :player
-    map = world.create_entity :map, cells: Array.new(80) { Array.new(45) }
+    game = Game.new(entity_store: build_entity_store)
+    game.player_entity = game.create_entity :player
+    map = game.create_entity :map, cells: Array.new(80) { Array.new(45) }
     game.transport_player_to map, x: 20, y: 20
 
     game.perform_player_action test_case[:action]
