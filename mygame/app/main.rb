@@ -24,11 +24,10 @@ def setup(args)
   tileset = build_tileset
   args.state.tilemap = Tilemap.new(x: 0, y: -8, cell_w: 32, cell_h: 32, grid_w: 40, grid_h: 23, tileset: tileset)
   entity_store = EntityStore.new component_definitions: default_component_definitions
-  world = World.new entity_store: entity_store, entity_types: default_entity_types
   $map_renderer = MapRenderer.new(tilemap: args.state.tilemap, entity_store: entity_store, tileset: tileset)
-  $game = Game.new(world: world)
-  $game.player_entity = world.create_entity :player
-  map = world.create_entity :map, cells: Array.new(40) { Array.new(23) }
+  $game = Game.new(entity_store: entity_store)
+  $game.player_entity = $game.create_entity :player
+  map = $game.create_entity :map, cells: Array.new(40) { Array.new(23) }
   $game.transport_player_to map, x: 20, y: 12
 end
 
