@@ -28,7 +28,6 @@ class GameTest
     @assert = assert
     @entity_store = build_entity_store
     @game = Game.new(entity_store: @entity_store)
-    @tileset = build_tileset
     @gameplay_scene = Scenes::Gameplay.new(game: @game)
     instance_eval(&block)
   end
@@ -67,9 +66,7 @@ class GameTest
         tilemap[x, y].tile || '.'
       }
     }
-    map_renderer = MapRenderer.new(tilemap: tilemap, entity_store: @entity_store, tileset: @tileset)
-    map_renderer.render @game.current_map, offset_x: 0, offset_y: 0
-    map_renderer.sprites.each do |sprite|
+    @gameplay_scene.sprites.each do |sprite|
       grid_coordinates = tilemap.to_grid_coordinates(sprite)
       map_tiles[grid_coordinates[:y]][grid_coordinates[:x]] = sprite[:char]
     end

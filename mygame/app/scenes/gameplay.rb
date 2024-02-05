@@ -12,6 +12,12 @@ module Scenes
     def tick(input_actions)
       player_action = player_action(input_actions)
       @game.perform_player_action(player_action) if player_action
+
+      @map_renderer.render @game.current_map, offset_x: 0, offset_y: 0
+    end
+
+    def sprites
+      @map_renderer.sprites
     end
 
     def tilemap_size
@@ -23,8 +29,9 @@ module Scenes
         x: 0, y: 0,
         cell_w: 32, cell_h: 32,
         grid_w: size[:w], grid_h: size[:h],
-        tileset: build_tileset
+        tileset: @tileset
       )
+      @map_renderer = MapRenderer.new(tilemap: @tilemap, entity_store: @game.entity_store, tileset: @tileset)
     end
 
     private

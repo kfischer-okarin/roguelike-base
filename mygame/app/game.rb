@@ -1,9 +1,11 @@
 # Manages world and player
 # Takes player action, applies it to the player entity, and ticks the world
 class Game
+  attr_reader :entity_store
   attr_accessor :player_entity
 
   def initialize(entity_store:)
+    @entity_store = entity_store
     @world = World.new entity_store: entity_store, entity_types: default_entity_types
   end
 
