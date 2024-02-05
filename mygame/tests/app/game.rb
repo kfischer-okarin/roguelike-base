@@ -1,5 +1,16 @@
 require 'tests/test_helpers'
 
+def test_game_create_entity(_args, assert)
+  world = build_world
+  game = Game.new(world: world)
+  entity_count_before = world.entity_store.size
+
+  entity = game.create_entity(:player)
+
+  assert.equal! world.entity_store.size, entity_count_before + 1
+  assert.equal! entity, world.entity_store[entity.id]
+end
+
 def test_game_transport_player_to(_args, assert)
   world = build_world
   game = Game.new(world: world)

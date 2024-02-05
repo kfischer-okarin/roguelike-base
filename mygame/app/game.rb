@@ -7,6 +7,10 @@ class Game
     @world = world
   end
 
+  def create_entity(type, with_components: nil, **attributes)
+    @world.create_entity type, with_components: with_components, **attributes
+  end
+
   def transport_player_to(map, x:, y:)
     @player_entity.place_on map, x: x, y: y
   end
