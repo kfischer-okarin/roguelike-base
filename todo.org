@@ -6,7 +6,7 @@
 
 ** TODO Comments about Object role + what it uses other objects for
 
-** TODO Move UI/Render Responsibility outside of Game - reverse dependency
+** DONE Move UI/Render Responsibility outside of Game - reverse dependency
 - UI Object? GamePlay Scene object?
 
 ** DONE What to do with the game data? Component + Prototype Definitions?
