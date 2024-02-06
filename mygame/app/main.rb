@@ -44,7 +44,6 @@ def process_inputs(gtk_inputs)
   input_actions
 end
 
-
 def render(args)
   args.outputs.background_color = [0, 0, 0]
   args.outputs.primitives << $scene.sprites
