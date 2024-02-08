@@ -6,11 +6,9 @@ class String
       original_chars = chars
       index = 0
       while index < original_chars.size
-        char = original_chars[index]
-
-        case char.ord
+        case getbyte(index)
         when 0x00..0x7F
-          result << char
+          result << self[index]
           index += 1
         when 0xC0..0xDF
           result << self[index..(index + 1)]
